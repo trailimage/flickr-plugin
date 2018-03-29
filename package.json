@@ -1,7 +1,7 @@
 {
    "name": "@trailimage/flickr-plugin",
    "version": "1.0.0",
-   "description": "Trail Image flickr-plugin",
+   "description": "Trail Image Flickr plugin",
    "private": false,
    "author": {
       "name": "Jason Abbott",
@@ -31,5 +31,9 @@
    "prettier": {
       "singleQuote": true,
       "tabWidth": 3
+   },
+   "dependencies": {
+      "@toba/flickr": "^1.3.0",
+      "@toba/map": "^1.0.2"
    }
 }

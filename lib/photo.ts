@@ -1,91 +1,54 @@
-import { Photo, Flickr } from '../types/';
-import is from '../is';
-import util from '../util/';
+import { Flickr } from '@toba/flickr';
+import { is, inDaylightSavings } from '@toba/tools';
+import { makePhotoSize } from './';
+import { Photo } from '../models/';
 import config from '../config';
-import photoSize from './photo-size';
-//import realFlickr from '../providers/flickr';
-
-//let flickr:Provider.Flickr = realFlickr;
 
 /**
- * Parse Flickr photo summary
- */
-function make(json:Flickr.PhotoSummary, index:number):Photo {
-   return {
-      id: json.id,
-      index: index + 1,
-      sourceUrl: 'flickr.com/photos/' + json.pathalias + '/' + json.id,
-      title: json.title,
-      description: json.description._content,
-      // tag slugs are later updated to proper names
-      tags: is.empty(json.tags) ? [] : json.tags.split(' '),
-      dateTaken: util.date.parse(json.datetaken),
-      latitude: parseFloat(json.latitude),
-      longitude: parseFloat(json.longitude),
-      primary: (parseInt(json.isprimary) == 1),
-      /**
-       * Whether taken date is an outlier compared to other photos in the same post
-       * @see http://www.wikihow.com/Calculate-Outliers
-       */
-      outlierDate: false,
-      //getEXIF,
-      size: {
-         preview: photoSize.make(json, config.flickr.sizes.preview),
-         normal: photoSize.make(json, config.flickr.sizes.normal),
-         big: photoSize.make(json, config.flickr.sizes.big)
-      },
-      // comma-delimited list of tags
-      get tagList(this:Photo):string { return this.tags.join(','); }
-   };
-}
-
-// /**
-//  * @this {Photo}
-//  * @returns {Promise}
-//  */
-// function getEXIF() { return flickr.getExif(this.id).then(exif.make); }
-
-/**
- * Simplistic outlier calculation
+ * TODO: consider moving to Flickr module since this seems to be Flickr-
+ * specific.
  *
- * https://en.wikipedia.org/wiki/Outlier
- * http://www.wikihow.com/Calculate-Outliers
+ * Convert text to date object. Date constructor uses local time which we
+ * need to defeat since local time will be different on host servers. Example:
+ *
+ *    2012-06-17 17:34:33
  */
-function identifyOutliers(photos:Photo[]) {
-   const median = (values:number[]) => {
-      const half = Math.floor(values.length / 2);
-      return (values.length % 2 !== 0) ? values[half] : (values[half-1] + values[half]) / 2.0;
-   };
-   const boundary = (values:number[], distance?:number) => {
-      if (!is.array(values) || values.length === 0) { return null; }
-      if (distance === undefined) { distance = 3; }
-
-      // sort lowest to highest
-      values.sort((d1, d2) => d1 - d2);
-      const half = Math.floor(values.length / 2);
-      const q1 = median(values.slice(0, half));
-      const q3 = median(values.slice(half));
-      const range = q3 - q1;
-
-      return {
-         min: q1 - (range * distance) as number,
-         max: q3 + (range * distance) as number
-      };
-   };
-   const fence = boundary(photos.map(p => p.dateTaken.getTime()));
-
-   if (fence !== null) {
-      for (const p of photos) {
-         const d = p.dateTaken.getTime();
-         if (d > fence.max || d < fence.min) { p.outlierDate = true; }
-      }
+export function parseDate(text: string): Date {
+   const parts = text.split(' ');
+   const date = parts[0].split('-').map(d => parseInt(d));
+   const time = parts[1].split(':').map(d => parseInt(d));
+   // convert local date to UTC time by adding offset
+   const h = time[0] - config.timeZone;
+   // date constructor automatically converts to local time
+   const d = new Date(
+      Date.UTC(date[0], date[1] - 1, date[2], h, time[1], time[2])
+   );
+   if (inDaylightSavings(d)) {
+      d.setHours(d.getHours() - 1);
    }
+   return d;
 }
 
-export default {
-   make,
-   identifyOutliers
-   // inject: {
-   //    set flickr(f:Provider.Flickr) { flickr = f; }
-   // }
-};
+export function make(json: Flickr.PhotoSummary, index: number): Photo {
+   const photo = new Photo(json.id, index);
+
+   photo.sourceUrl = 'flickr.com/photos/' + json.pathalias + '/' + json.id;
+   photo.title = json.title;
+   photo.description = json.description._content;
+   // tag slugs are later updated to proper names
+   photo.tags = is.empty(json.tags) ? [] : json.tags.split(' ');
+   photo.dateTaken = parseDate(json.datetaken);
+   photo.latitude = parseFloat(json.latitude);
+   photo.longitude = parseFloat(json.longitude);
+   photo.primary = parseInt(json.isprimary) == 1;
+
+   photo.outlierDate = false;
+
+   photo.size = {
+      preview: makePhotoSize(json, config.style.photoSizes.preview),
+      normal: makePhotoSize(json, config.style.photoSizes.normal),
+      big: makePhotoSize(json, config.style.photoSizes.big)
+   };
+
+   return photo;
+}
