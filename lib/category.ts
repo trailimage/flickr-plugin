@@ -1,7 +1,7 @@
 import { Flickr } from '@toba/flickr';
 import { slug, is } from '@toba/tools';
-import { Category, photoBlog, Post } from '../models/index';
-import { makePost } from './index';
+import { Category, photoBlog, Post } from '@trailimage/models';
+import { makePost } from '../';
 import config from '../config';
 
 /**

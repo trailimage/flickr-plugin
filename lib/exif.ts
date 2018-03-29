@@ -1,5 +1,5 @@
 import { Flickr } from '@toba/flickr';
-import { EXIF } from '../models/';
+import { EXIF } from '@trailimage/models';
 
 /**
  * Create EXIF from Flickr data.

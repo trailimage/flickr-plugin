@@ -1,6 +1,6 @@
 import '@toba/test';
-import { photoBlog } from '../models/photo-blog';
-import { makePhotoBlog } from './index';
+import { photoBlog } from '@trailimage/models';
+import { makePhotoBlog } from '../';
 
 test('makes photo blog', async () => {
    expect(photoBlog.loaded).toBe(false);

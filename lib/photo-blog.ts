@@ -1,7 +1,7 @@
 import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
-import { photoBlog, Photo, EXIF } from '../models/';
-import { flickr, makeCategory, makeEXIF, makePhoto } from './';
+import { photoBlog, Photo, EXIF } from '@trailimage/models';
+import { flickr, makeCategory, makeEXIF, makePhoto } from '../';
 import config from '../config';
 
 /**

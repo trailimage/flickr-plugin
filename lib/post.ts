@@ -1,9 +1,9 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
 import { slug, is } from '@toba/tools';
-import { Post, Photo, photoBlog } from '../models/';
+import { Post, Photo, photoBlog } from '@trailimage/models';
 import { identifyOutliers } from '../models/photo';
 import re from '../regex';
-import { makeVideoInfo, makePhoto, flickr, timeStampToDate } from './';
+import { makeVideoInfo, makePhoto, flickr, timeStampToDate } from '../';
 
 /**
  * Create post from Flickr photo set.

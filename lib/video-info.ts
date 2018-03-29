@@ -1,5 +1,5 @@
 import { Flickr } from '@toba/flickr';
-import { VideoInfo } from '../models/';
+import { VideoInfo } from '@trailimage/models';
 import re from '../regex';
 
 /**

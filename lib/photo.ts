@@ -1,7 +1,7 @@
 import { Flickr } from '@toba/flickr';
 import { is, inDaylightSavings } from '@toba/tools';
-import { makePhotoSize } from './';
-import { Photo } from '../models/';
+import { makePhotoSize } from '../';
+import { Photo } from '@trailimage/models';
 import config from '../config';
 
 /**
