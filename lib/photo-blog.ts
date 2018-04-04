@@ -1,6 +1,7 @@
 import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
-import { photoBlog, Photo, EXIF } from '@trailimage/models';
+import { log } from '@toba/logger';
+import { photoBlog, Photo, EXIF, Post } from '@trailimage/models';
 import { flickr, makeCategory, makeEXIF, makePhoto } from '../';
 import config from '../config';
 
@@ -70,7 +71,10 @@ const getEXIF = (photoID: string): Promise<EXIF> =>
 /**
  * Get first post that includes the given photo.
  */
-async function getPostWithPhoto(this: typeof photoBlog, photo: Photo | string) {
+async function getPostWithPhoto(
+   this: typeof photoBlog,
+   photo: Photo | string
+): Promise<Post> {
    const id: string =
       typeof photo == is.Type.String ? (photo as string) : (photo as Photo).id;
    const photoSets = await flickr.getPhotoContext(id);
