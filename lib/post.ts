@@ -1,8 +1,13 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
 import { slug, is } from '@toba/tools';
-import { Post, Photo, photoBlog } from '@trailimage/models';
-import { identifyOutliers } from '../models/photo';
-import re from '../regex';
+import { log } from '@toba/logger';
+import {
+   Post,
+   Photo,
+   photoBlog,
+   identifyOutliers,
+   config
+} from '@trailimage/models';
 import { makeVideoInfo, makePhoto, flickr, timeStampToDate } from '../';
 
 /**
@@ -21,7 +26,8 @@ export function make(
 
    assignFactoryMethods(p);
 
-   const parts = p.originalTitle.split(re.subtitle);
+   const re = new RegExp(config.subtitleSeparator + '\\s*', 'g');
+   const parts = p.originalTitle.split(re);
 
    p.title = parts[0];
 
@@ -39,18 +45,30 @@ export function make(
 /**
  * Assign post methods to lazy-load content.
  */
-function assignFactoryMethods(p: Post): Post {
-   p.getInfo = async () =>
-      p.infoLoaded
-         ? p
-         : flickr.getSetInfo(p.id).then(info => updateInfo(p, info));
+// function assignFactoryMethods(p: Post): Post {
+//    p.getInfo = async () =>
+//       p.infoLoaded
+//          ? p
+//          : flickr.getSetInfo(p.id).then(info => updateInfo(p, info));
 
-   p.getPhotos = async () =>
-      p.photosLoaded
-         ? p.photos
-         : flickr.getSetPhotos(p.id).then(res => updatePhotos(p, res));
+//    p.getPhotos = async () =>
+//       p.photosLoaded
+//          ? p.photos
+//          : flickr.getSetPhotos(p.id).then(res => updatePhotos(p, res));
 
-   return p;
+//    return p;
+// }
+
+export function getInfo(this: Post): Promise<Post> {
+   return this.infoLoaded
+      ? Promise.resolve(this)
+      : flickr.getSetInfo(this.id).then(info => updateInfo(this, info));
+}
+
+export function getPhotos(this: Post): Promise<Photo[]> {
+   return this.photosLoaded
+      ? Promise.resolve(this.photos)
+      : flickr.getSetPhotos(this.id).then(res => updatePhotos(this, res));
 }
 
 function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {

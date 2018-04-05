@@ -202,8 +202,8 @@
     zlib "^1.0.5"
 
 "@trailimage/models@^1.0.0-alpha.1":
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.0.0-alpha.4.tgz#d0d8ff14222d290846fc12c61a49b9ec7888acb8"
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.0.0-beta.4.tgz#056681a0e8f294d553b848fd786af8c328858a1b"
   dependencies:
     "@toba/feed" "^1.0.1"
     "@toba/json-ld" "^1.0.5"

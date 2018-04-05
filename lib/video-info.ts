@@ -1,6 +1,5 @@
 import { Flickr } from '@toba/flickr';
 import { VideoInfo } from '@trailimage/models';
-//import re from '../regex';
 
 /**
  * Extract video link from specially formatted remark in set description.

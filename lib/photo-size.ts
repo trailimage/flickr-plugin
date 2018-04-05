@@ -11,9 +11,9 @@ export function make(json: any, sizeField: string | string[]): PhotoSize {
          return this.url === null && this.width === 0;
       }
    };
-   let field = null;
+   let field: string = null;
 
-   if (is.array(sizeField)) {
+   if (is.array<string>(sizeField)) {
       // iterate through size preferences to find first that isn't empty
       for (field of sizeField) {
          // break with given size url assignment if it exists in the photo summary

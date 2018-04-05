@@ -1,9 +1,8 @@
 import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
-import { photoBlog, Photo, EXIF, Post } from '@trailimage/models';
+import { photoBlog, Photo, EXIF, Post, config } from '@trailimage/models';
 import { flickr, makeCategory, makeEXIF, makePhoto } from '../';
-import config from '../config';
 
 /**
  * @param emptyIfLoaded Whether to reset the library before loading
@@ -65,13 +64,13 @@ export function make(emptyIfLoaded: boolean = true) {
       });
 }
 
-const getEXIF = (photoID: string): Promise<EXIF> =>
+export const getEXIF = (photoID: string): Promise<EXIF> =>
    flickr.getExif(photoID).then(makeEXIF);
 
 /**
  * Get first post that includes the given photo.
  */
-async function getPostWithPhoto(
+export async function getPostWithPhoto(
    this: typeof photoBlog,
    photo: Photo | string
 ): Promise<Post> {
@@ -87,7 +86,7 @@ async function getPostWithPhoto(
 /**
  * All photos with given tags.
  */
-const getPhotosWithTags = (tags: string | string[]) =>
+export const getPhotosWithTags = (tags: string | string[]) =>
    flickr.photoSearch(tags).then(photos => photos.map(makePhoto));
 
 function assignFactoryMethods() {

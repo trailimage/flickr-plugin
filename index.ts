@@ -1,6 +1,5 @@
 import { is, parseNumber } from '@toba/tools';
 import { FlickrClient } from '@toba/flickr';
-import { ModelFactory } from '@trailimage/models';
 
 export { make as makePhotoBlog } from './lib/photo-blog';
 export { make as makeCategory } from './lib/category';
@@ -14,10 +13,6 @@ export { make as makeEXIF } from './lib/exif';
  * Singleton Flickr client.
  */
 export const flickr = new FlickrClient(config.flickr);
-
-export const factory: ModelFactory = {
-   load: makePhotoBlog
-};
 
 /**
  * Timestamps are created on hosted servers so time zone isn't known.
