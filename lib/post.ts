@@ -1,24 +1,44 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
-import { slug, is } from '@toba/tools';
+import { slug, is, parseNumber } from '@toba/tools';
 import { log } from '@toba/logger';
 import {
    Post,
    Photo,
    photoBlog,
    identifyOutliers,
-   config
+   modelConfig
 } from '@trailimage/models';
 import { flickr } from './provider';
-import { load as loadVideoInfo } from './video-info';
-import { loadPhoto as loadPhoto } from './photo';
-import { timeStampToDate } from '../';
+import { loadVideoInfo } from './video-info';
+import { loadPhoto } from './photo';
+
+/**
+ * Timestamps are created on hosted servers so time zone isn't known.
+ */
+export function timeStampToDate(timestamp: Date | number | string): Date {
+   if (is.date(timestamp)) {
+      return timestamp;
+   } else if (is.text(timestamp)) {
+      timestamp = parseNumber(timestamp);
+   }
+   return new Date(timestamp * 1000);
+}
+
+/**
+ * Example 2013-10-02T11:55Z
+ *
+ * http://en.wikipedia.org/wiki/ISO_8601
+ * https://developers.facebook.com/docs/reference/opengraph/object-type/article/
+ */
+export const iso8601time = (timestamp: number | Date) =>
+   timeStampToDate(timestamp).toISOString();
 
 /**
  * Create post from Flickr photo set.
  *
  * @param chronoligical Whether set photos occurred together at a point in time
  */
-export function load(
+export function loadPost(
    flickrSet: Flickr.SetSummary | FeatureSet,
    chronological: boolean = true
 ): Post {
@@ -27,7 +47,7 @@ export function load(
    p.id = flickrSet.id;
    p.chronological = chronological;
 
-   const re = new RegExp(config.subtitleSeparator + '\\s*', 'g');
+   const re = new RegExp(modelConfig.subtitleSeparator + '\\s*', 'g');
    const parts = p.originalTitle.split(re);
 
    p.title = parts[0];

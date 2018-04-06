@@ -1,10 +1,10 @@
 import '@toba/test';
 import { photoBlog } from '@trailimage/models';
-import { makePhotoBlog } from '../';
+import { loadPhotoBlog } from './photo-blog';
 
 test('makes photo blog', async () => {
    expect(photoBlog.loaded).toBe(false);
-   await makePhotoBlog();
+   await loadPhotoBlog(photoBlog);
    expect(photoBlog.loaded).toBe(true);
 });
 
@@ -115,7 +115,7 @@ test('reloads library and identifies changed cache keys', async () => {
    ];
    photoBlog.remove(...postKeys);
 
-   await makePhotoBlog(false);
+   await loadPhotoBlog(photoBlog);
 
    const changes = photoBlog.changedKeys;
 

@@ -1,12 +1,13 @@
 import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
-import { PhotoBlog, config } from '@trailimage/models';
+import { PhotoBlog } from '@trailimage/models';
 import { flickr } from './provider';
+import { config } from './config';
 import { loadCategory } from './category';
 import { loadPhoto } from './photo';
 
-export function load(photoBlog: PhotoBlog) {
+export function loadPhotoBlog(photoBlog: PhotoBlog) {
    // store existing post keys to compute changes
    const hadPostKeys = photoBlog.postKeys();
    // reset changed keys to none
@@ -75,9 +76,7 @@ export const photosWithTags = (tags: string | string[]) =>
  * Convert tags to hash of phrases keyed to their "clean" abbreviation
  */
 function parsePhotoTags(rawTags: Flickr.Tag[]): { [key: string]: string } {
-   const exclusions = is.array(config.flickr.excludeTags)
-      ? config.flickr.excludeTags
-      : [];
+   const exclusions = is.array(config.excludeTags) ? config.excludeTags : [];
    return rawTags.reduce(
       (tags, t) => {
          const text = t.raw[0]._content;

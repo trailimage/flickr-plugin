@@ -3,12 +3,12 @@ import { EXIF } from '@trailimage/models';
 import { flickr } from './provider';
 
 export const loadEXIF = (photoID: string): Promise<EXIF> =>
-   flickr.getExif(photoID).then(populate);
+   flickr.getExif(photoID).then(assign);
 
 /**
  * Create EXIF from Flickr data.
  */
-function populate(flickrExif: Flickr.Exif[]): EXIF {
+function assign(flickrExif: Flickr.Exif[]): EXIF {
    const exif = new EXIF();
 
    exif.artist = parse(flickrExif, 'Artist');

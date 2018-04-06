@@ -1,8 +1,8 @@
 import { Flickr } from '@toba/flickr';
 import { is, inDaylightSavings } from '@toba/tools';
 import { Photo } from '@trailimage/models';
-import { loadPhotoSize } from '../';
-import config from '../config';
+import { loadPhotoSize } from './photo-size';
+import { config } from './config';
 
 /**
  * TODO: consider moving to Flickr module since this seems to be Flickr-

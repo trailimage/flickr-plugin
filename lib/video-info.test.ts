@@ -1,5 +1,5 @@
-import { load } from './video-info';
+import { loadVideoInfo } from './video-info';
 
 test('constructs video info object', () => {
-   expect(load).toBeDefined();
+   expect(loadVideoInfo).toBeDefined();
 });
