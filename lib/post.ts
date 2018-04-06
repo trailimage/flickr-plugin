@@ -8,14 +8,17 @@ import {
    identifyOutliers,
    config
 } from '@trailimage/models';
-import { makeVideoInfo, makePhoto, flickr, timeStampToDate } from '../';
+import { flickr } from './provider';
+import { load as loadVideoInfo } from './video-info';
+import { load as loadPhoto } from './photo';
+import { timeStampToDate } from '../';
 
 /**
  * Create post from Flickr photo set.
  *
  * @param chronoligical Whether set photos occurred together at a point in time
  */
-export function make(
+export function load(
    flickrSet: Flickr.SetSummary | FeatureSet,
    chronological: boolean = true
 ): Post {
@@ -23,8 +26,6 @@ export function make(
 
    p.id = flickrSet.id;
    p.chronological = chronological;
-
-   assignFactoryMethods(p);
 
    const re = new RegExp(config.subtitleSeparator + '\\s*', 'g');
    const parts = p.originalTitle.split(re);
@@ -42,34 +43,11 @@ export function make(
    return p;
 }
 
-/**
- * Assign post methods to lazy-load content.
- */
-// function assignFactoryMethods(p: Post): Post {
-//    p.getInfo = async () =>
-//       p.infoLoaded
-//          ? p
-//          : flickr.getSetInfo(p.id).then(info => updateInfo(p, info));
+export const loadInfo = (p: Post): Promise<Post> =>
+   flickr.getSetInfo(p.id).then(info => updateInfo(p, info));
 
-//    p.getPhotos = async () =>
-//       p.photosLoaded
-//          ? p.photos
-//          : flickr.getSetPhotos(p.id).then(res => updatePhotos(p, res));
-
-//    return p;
-// }
-
-export function getInfo(this: Post): Promise<Post> {
-   return this.infoLoaded
-      ? Promise.resolve(this)
-      : flickr.getSetInfo(this.id).then(info => updateInfo(this, info));
-}
-
-export function getPhotos(this: Post): Promise<Photo[]> {
-   return this.photosLoaded
-      ? Promise.resolve(this.photos)
-      : flickr.getSetPhotos(this.id).then(res => updatePhotos(this, res));
-}
+export const loadPhotos = (p: Post): Promise<Photo[]> =>
+   flickr.getSetPhotos(p.id).then(res => updatePhotos(p, res));
 
 function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
    const thumb = `http://farm${setInfo.farm}.staticflickr.com/${
@@ -77,7 +55,7 @@ function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
    }/${setInfo.primary}_${setInfo.secret}`;
 
    // removes video information from setInfo.description
-   p.video = makeVideoInfo(setInfo);
+   p.video = loadVideoInfo(setInfo);
    p.createdOn = timeStampToDate(setInfo.date_create);
    p.updatedOn = timeStampToDate(setInfo.date_update);
    p.photoCount = setInfo.photos;
@@ -95,7 +73,7 @@ function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
 }
 
 function updatePhotos(p: Post, setPhotos: Flickr.SetPhotos): Photo[] {
-   p.photos = setPhotos.photo.map((img, index) => makePhoto(img, index));
+   p.photos = setPhotos.photo.map((img, index) => loadPhoto(img, index));
 
    if (p.photos.length > 0) {
       p.coverPhoto = p.photos.find(img => img.primary);

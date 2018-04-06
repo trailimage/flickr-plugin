@@ -4,7 +4,7 @@ import { EXIF } from '@trailimage/models';
 /**
  * Create EXIF from Flickr data.
  */
-export function make(flickrExif: Flickr.Exif[]): EXIF {
+export function load(flickrExif: Flickr.Exif[]): EXIF {
    const exif = new EXIF();
 
    exif.artist = parse(flickrExif, 'Artist');

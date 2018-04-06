@@ -1,5 +1,5 @@
-import { make } from './video-info';
+import { load } from './video-info';
 
 test('constructs video info object', () => {
-   expect(make).toBeDefined();
+   expect(load).toBeDefined();
 });

@@ -1,21 +1,15 @@
 import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
-import { photoBlog, Photo, EXIF, Post, config } from '@trailimage/models';
-import { flickr, makeCategory, makeEXIF, makePhoto } from '../';
+import { PhotoBlog, EXIF, config } from '@trailimage/models';
+import { flickr } from './provider';
+import { load as loadCategory } from './category';
+import { load as loadFlickrEXIF } from './exif';
+import { load as loadPhoto } from './photo';
 
-/**
- * @param emptyIfLoaded Whether to reset the library before loading
- */
-export function make(emptyIfLoaded: boolean = true) {
+export function load(photoBlog: PhotoBlog) {
    // store existing post keys to compute changes
    const hadPostKeys = photoBlog.postKeys();
-
-   if (!photoBlog.loaded) {
-      assignFactoryMethods();
-   } else if (emptyIfLoaded) {
-      photoBlog.empty();
-   }
    // reset changed keys to none
    photoBlog.changedKeys = [];
 
@@ -25,7 +19,7 @@ export function make(emptyIfLoaded: boolean = true) {
          photoBlog.tags = is.value<Flickr.Tag[]>(tags)
             ? parsePhotoTags(tags)
             : {};
-         collections.forEach(c => makeCategory(c, true));
+         collections.forEach(c => loadCategory(c, true));
          photoBlog.correlatePosts();
          photoBlog.loaded = true;
 
@@ -64,36 +58,22 @@ export function make(emptyIfLoaded: boolean = true) {
       });
 }
 
-export const getEXIF = (photoID: string): Promise<EXIF> =>
-   flickr.getExif(photoID).then(makeEXIF);
+export const loadEXIF = (photoID: string): Promise<EXIF> =>
+   flickr.getExif(photoID).then(loadFlickrEXIF);
 
 /**
  * Get first post that includes the given photo.
  */
-export async function getPostWithPhoto(
-   this: typeof photoBlog,
-   photo: Photo | string
-): Promise<Post> {
-   const id: string =
-      typeof photo == is.Type.String ? (photo as string) : (photo as Photo).id;
-   const photoSets = await flickr.getPhotoContext(id);
-
-   return is.value(photoSets)
-      ? this.posts.find(p => p.id == photoSets[0].id)
-      : null;
+export async function loadPostIdWithPhotoId(photoID: string): Promise<string> {
+   const photoSets = await flickr.getPhotoContext(photoID);
+   return is.value(photoSets) ? photoSets[0].id : null;
 }
 
 /**
  * All photos with given tags.
  */
-export const getPhotosWithTags = (tags: string | string[]) =>
-   flickr.photoSearch(tags).then(photos => photos.map(makePhoto));
-
-function assignFactoryMethods() {
-   photoBlog.getEXIF = getEXIF;
-   photoBlog.getPostWithPhoto = getPostWithPhoto.bind(photoBlog);
-   photoBlog.getPhotosWithTags = getPhotosWithTags;
-}
+export const loadPhotosWithTags = (tags: string | string[]) =>
+   flickr.photoSearch(tags).then(photos => photos.map(loadPhoto));
 
 /**
  * Convert tags to hash of phrases keyed to their "clean" abbreviation

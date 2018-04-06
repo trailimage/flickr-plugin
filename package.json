@@ -1,7 +1,7 @@
 {
-   "name": "@trailimage/flickr-plugin",
+   "name": "@trailimage/flickr-provider",
    "version": "1.0.0",
-   "description": "Trail Image Flickr plugin",
+   "description": "Trail Image Flickr provider",
    "private": false,
    "author": {
       "name": "Jason Abbott",
@@ -32,10 +32,10 @@
    },
    "repository": {
       "type": "git",
-      "url": "https://github.com/trailimage/flickr-plugin"
+      "url": "https://github.com/trailimage/flickr-provider"
    },
    "bugs": {
-      "url": "https://github.com/trailimage/flickr-plugin/issues"
+      "url": "https://github.com/trailimage/flickr-provider/issues"
    },
    "prettier": {
       "singleQuote": true,

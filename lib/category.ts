@@ -1,12 +1,12 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
 import { slug, is } from '@toba/tools';
 import { Category, photoBlog, Post, config } from '@trailimage/models';
-import { makePost } from '../';
+import { load as loadPost } from './post';
 
 /**
  * Create post category from Flickr data.
  */
-export function make(collection: Flickr.Collection, root = false): Category {
+export function load(collection: Flickr.Collection, root = false): Category {
    const category = new Category(slug(collection.title), collection.title);
    const feature: FeatureSet = config.flickr.featureSets;
    let exclude = config.flickr.excludeSets;
@@ -28,7 +28,7 @@ export function make(collection: Flickr.Collection, root = false): Category {
 
             // create post if it isn't part of an already added category
             if (!is.value<Post>(p)) {
-               p = makePost(s);
+               p = loadPost(s);
             }
 
             // add post to category and category to post
@@ -44,7 +44,7 @@ export function make(collection: Flickr.Collection, root = false): Category {
    if (is.array(collection.collection)) {
       // recursively add subcategories
       collection.collection.forEach(c => {
-         category.add(make(c));
+         category.add(load(c));
       });
    }
 
@@ -52,7 +52,7 @@ export function make(collection: Flickr.Collection, root = false): Category {
       // sets to be featured at the collection root can be manually defined in
       // configuration
       for (const f of feature) {
-         const p = makePost(f, false);
+         const p = loadPost(f, false);
          p.feature = true;
          photoBlog.addPost(p);
       }

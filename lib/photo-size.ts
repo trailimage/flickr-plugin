@@ -1,7 +1,7 @@
 import { is } from '@toba/tools';
 import { PhotoSize } from '@trailimage/models';
 
-export function make(json: any, sizeField: string | string[]): PhotoSize {
+export function load(json: any, sizeField: string | string[]): PhotoSize {
    const size = {
       url: null as string,
       width: 0,

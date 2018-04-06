@@ -1,18 +1,12 @@
 import { is, parseNumber } from '@toba/tools';
-import { FlickrClient } from '@toba/flickr';
 
-export { make as makePhotoBlog } from './lib/photo-blog';
-export { make as makeCategory } from './lib/category';
-export { make as makePhoto } from './lib/photo';
-export { make as makePost } from './lib/post';
-export { make as makePhotoSize } from './lib/photo-size';
-export { make as makeVideoInfo } from './lib/video-info';
-export { make as makeEXIF } from './lib/exif';
-
-/**
- * Singleton Flickr client.
- */
-export const flickr = new FlickrClient(config.flickr);
+// export { load as loadPhotoBlog } from './lib/photo-blog';
+// export { load as loadCategory } from './lib/category';
+// export { load as loadPhoto } from './lib/photo';
+// export { load as loadPost } from './lib/post';
+// export { load as loadPhotoSize } from './lib/photo-size';
+// export { load as loadVideoInfo } from './lib/video-info';
+// export { load as loadEXIF } from './lib/exif';
 
 /**
  * Timestamps are created on hosted servers so time zone isn't known.

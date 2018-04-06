@@ -1,7 +1,7 @@
 import { Flickr } from '@toba/flickr';
 import { is, inDaylightSavings } from '@toba/tools';
-import { makePhotoSize } from '../';
 import { Photo } from '@trailimage/models';
+import { loadPhotoSize } from '../';
 import config from '../config';
 
 /**
@@ -29,7 +29,7 @@ export function parseDate(text: string): Date {
    return d;
 }
 
-export function make(json: Flickr.PhotoSummary, index: number): Photo {
+export function load(json: Flickr.PhotoSummary, index: number): Photo {
    const photo = new Photo(json.id, index);
 
    photo.sourceUrl = 'flickr.com/photos/' + json.pathalias + '/' + json.id;
@@ -45,9 +45,9 @@ export function make(json: Flickr.PhotoSummary, index: number): Photo {
    photo.outlierDate = false;
 
    photo.size = {
-      preview: makePhotoSize(json, config.style.photoSizes.preview),
-      normal: makePhotoSize(json, config.style.photoSizes.normal),
-      big: makePhotoSize(json, config.style.photoSizes.big)
+      preview: loadPhotoSize(json, config.style.photoSizes.preview),
+      normal: loadPhotoSize(json, config.style.photoSizes.normal),
+      big: loadPhotoSize(json, config.style.photoSizes.big)
    };
 
    return photo;
