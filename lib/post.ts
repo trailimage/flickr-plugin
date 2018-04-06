@@ -10,7 +10,7 @@ import {
 } from '@trailimage/models';
 import { flickr } from './provider';
 import { load as loadVideoInfo } from './video-info';
-import { load as loadPhoto } from './photo';
+import { loadPhoto as loadPhoto } from './photo';
 import { timeStampToDate } from '../';
 
 /**

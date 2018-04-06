@@ -1,20 +1,16 @@
 import { PostProvider } from '@trailimage/models';
 import { FlickrClient } from '@toba/flickr';
-import {
-   load,
-   loadEXIF,
-   loadPostIdWithPhotoId,
-   loadPhotosWithTags
-} from './photo-blog';
+import { load, postIdWithPhotoId, photosWithTags } from './photo-blog';
 import { loadInfo, loadPhotos } from './post';
+import { loadEXIF } from './exif';
 
 export const provider: PostProvider = {
-   loadPhotoBlog: load,
-   loadEXIF,
-   loadPostIdWithPhotoId,
-   loadPhotosWithTags,
-   loadPostInfo: loadInfo,
-   loadPostPhotos: loadPhotos
+   photoBlog: load,
+   exif: loadEXIF,
+   postIdWithPhotoId,
+   photosWithTags,
+   postInfo: loadInfo,
+   postPhotos: loadPhotos
 };
 
 /**

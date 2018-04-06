@@ -29,7 +29,7 @@ export function parseDate(text: string): Date {
    return d;
 }
 
-export function load(json: Flickr.PhotoSummary, index: number): Photo {
+export function loadPhoto(json: Flickr.PhotoSummary, index: number): Photo {
    const photo = new Photo(json.id, index);
 
    photo.sourceUrl = 'flickr.com/photos/' + json.pathalias + '/' + json.id;

@@ -1,11 +1,10 @@
 import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
-import { PhotoBlog, EXIF, config } from '@trailimage/models';
+import { PhotoBlog, config } from '@trailimage/models';
 import { flickr } from './provider';
-import { load as loadCategory } from './category';
-import { load as loadFlickrEXIF } from './exif';
-import { load as loadPhoto } from './photo';
+import { loadCategory } from './category';
+import { loadPhoto } from './photo';
 
 export function load(photoBlog: PhotoBlog) {
    // store existing post keys to compute changes
@@ -58,13 +57,10 @@ export function load(photoBlog: PhotoBlog) {
       });
 }
 
-export const loadEXIF = (photoID: string): Promise<EXIF> =>
-   flickr.getExif(photoID).then(loadFlickrEXIF);
-
 /**
  * Get first post that includes the given photo.
  */
-export async function loadPostIdWithPhotoId(photoID: string): Promise<string> {
+export async function postIdWithPhotoId(photoID: string): Promise<string> {
    const photoSets = await flickr.getPhotoContext(photoID);
    return is.value(photoSets) ? photoSets[0].id : null;
 }
@@ -72,7 +68,7 @@ export async function loadPostIdWithPhotoId(photoID: string): Promise<string> {
 /**
  * All photos with given tags.
  */
-export const loadPhotosWithTags = (tags: string | string[]) =>
+export const photosWithTags = (tags: string | string[]) =>
    flickr.photoSearch(tags).then(photos => photos.map(loadPhoto));
 
 /**

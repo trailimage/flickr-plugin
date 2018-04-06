@@ -6,7 +6,7 @@ import { load as loadPost } from './post';
 /**
  * Create post category from Flickr data.
  */
-export function load(collection: Flickr.Collection, root = false): Category {
+export function loadCategory(collection: Flickr.Collection, root = false): Category {
    const category = new Category(slug(collection.title), collection.title);
    const feature: FeatureSet = config.flickr.featureSets;
    let exclude = config.flickr.excludeSets;
@@ -44,7 +44,7 @@ export function load(collection: Flickr.Collection, root = false): Category {
    if (is.array(collection.collection)) {
       // recursively add subcategories
       collection.collection.forEach(c => {
-         category.add(load(c));
+         category.add(loadCategory(c));
       });
    }
 
