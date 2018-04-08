@@ -1,3 +1,4 @@
+import '@toba/test';
 import { parseDate } from './photo';
 
 test('converts Flickr date string to local Date', () => {

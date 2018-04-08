@@ -6,6 +6,8 @@ import { loadPost } from './post';
 
 /**
  * Create post category from Flickr data.
+ *
+ * @param root Whether it's a root category
  */
 export function loadCategory(
    collection: Flickr.Collection,

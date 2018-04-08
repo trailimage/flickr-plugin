@@ -18,7 +18,7 @@ export function parseDate(text: string): Date {
    const date = parts[0].split('-').map(d => parseInt(d));
    const time = parts[1].split(':').map(d => parseInt(d));
    // convert local date to UTC time by adding offset
-   const h = time[0] - config.timeZone;
+   const h = time[0] - config.timeZoneOffset;
    // date constructor automatically converts to local time
    const d = new Date(
       Date.UTC(date[0], date[1] - 1, date[2], h, time[1], time[2])

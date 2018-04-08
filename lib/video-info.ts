@@ -3,14 +3,13 @@ import { VideoInfo } from '@trailimage/models';
 
 /**
  * Extract video link from specially formatted remark in set description.
- * Example:
- *
+ * @example
  *    Video (960x720): <a href="http://youtu.be/obCgu3yJ4uw" rel="nofollow">youtu.be/obCgu3yJ4uw</a>
  */
 const re = /Video(\s*\((\d+)[x×](\d+)\))?:\s*<a[^>]+>[^\/]+\/([\w\-_]+)<\/a>/gi;
 
 /**
- * Get video ID and dimensions
+ * Get video ID and dimensions from Flickr set description.
  */
 export function loadVideoInfo(setInfo: Flickr.SetInfo): VideoInfo {
    const d = setInfo.description._content;

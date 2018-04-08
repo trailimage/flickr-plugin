@@ -6,14 +6,15 @@ import {
    Photo,
    photoBlog,
    identifyOutliers,
-   modelConfig
+   config as modelConfig
 } from '@trailimage/models';
 import { flickr } from './provider';
 import { loadVideoInfo } from './video-info';
 import { loadPhoto } from './photo';
 
 /**
- * Timestamps are created on hosted servers so time zone isn't known.
+ * Convert Flickr timestamp to `Date` instance. Timestamps are created on hosted
+ * servers so time zone isn't known.
  */
 export function timeStampToDate(timestamp: Date | number | string): Date {
    if (is.date(timestamp)) {
@@ -25,12 +26,13 @@ export function timeStampToDate(timestamp: Date | number | string): Date {
 }
 
 /**
- * Example 2013-10-02T11:55Z
+ * Convert Flickr timestamp to ISO 8601 string.
  *
- * http://en.wikipedia.org/wiki/ISO_8601
- * https://developers.facebook.com/docs/reference/opengraph/object-type/article/
+ * @example 2013-10-02T11:55Z
+ * @see http://en.wikipedia.org/wiki/ISO_8601
+ * @see https://developers.facebook.com/docs/reference/opengraph/object-type/article/
  */
-export const iso8601time = (timestamp: number | Date) =>
+export const timeStampToIsoString = (timestamp: number | Date) =>
    timeStampToDate(timestamp).toISOString();
 
 /**
@@ -69,6 +71,9 @@ export const loadInfo = (p: Post): Promise<Post> =>
 export const loadPhotos = (p: Post): Promise<Photo[]> =>
    flickr.getSetPhotos(p.id).then(res => updatePhotos(p, res));
 
+/**
+ * Update post with Flickr set information.
+ */
 function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
    const thumb = `http://farm${setInfo.farm}.staticflickr.com/${
       setInfo.server
