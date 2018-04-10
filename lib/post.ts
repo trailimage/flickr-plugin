@@ -8,7 +8,7 @@ import {
    identifyOutliers,
    config as modelConfig
 } from '@trailimage/models';
-import { flickr } from './provider';
+import { client } from './client';
 import { loadVideoInfo } from './video-info';
 import { loadPhoto } from './photo';
 
@@ -66,10 +66,10 @@ export function loadPost(
 }
 
 export const loadInfo = (p: Post): Promise<Post> =>
-   flickr.getSetInfo(p.id).then(info => updateInfo(p, info));
+   client().getSetInfo(p.id).then(info => updateInfo(p, info));
 
 export const loadPhotos = (p: Post): Promise<Photo[]> =>
-   flickr.getSetPhotos(p.id).then(res => updatePhotos(p, res));
+   client().getSetPhotos(p.id).then(res => updatePhotos(p, res));
 
 /**
  * Update post with Flickr set information.

@@ -19,6 +19,8 @@ test('Selects photo size', async () => {
    expect(size.url).toBe(
       'https://farm9.staticflickr.com/8109/8459503474_7fcb90b3e9_b.jpg'
    );
+   expect(size.width).toBe(1024);
+   expect(size.height).toBe(688);
 });
 
 test('Only selects available photo size', () => {

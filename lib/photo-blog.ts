@@ -2,7 +2,7 @@ import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
 import { PhotoBlog } from '@trailimage/models';
-import { flickr } from './provider';
+import { client } from './client';
 import { config } from './config';
 import { loadCategory } from './category';
 import { loadPhoto } from './photo';
@@ -13,7 +13,7 @@ export function loadPhotoBlog(photoBlog: PhotoBlog) {
    // reset changed keys to none
    photoBlog.changedKeys = [];
 
-   return Promise.all([flickr.getCollections(), flickr.getAllPhotoTags()])
+   return Promise.all([client().getCollections(), client().getAllPhotoTags()])
       .then(([collections, tags]) => {
          // parse collections and photo tags
          photoBlog.tags = is.value<Flickr.Tag[]>(tags)
@@ -62,7 +62,7 @@ export function loadPhotoBlog(photoBlog: PhotoBlog) {
  * Get first post that includes the given photo.
  */
 export async function postIdWithPhotoId(photoID: string): Promise<string> {
-   const photoSets = await flickr.getPhotoContext(photoID);
+   const photoSets = await client().getPhotoContext(photoID);
    return is.value(photoSets) ? photoSets[0].id : null;
 }
 
@@ -70,7 +70,7 @@ export async function postIdWithPhotoId(photoID: string): Promise<string> {
  * All photos with given tags.
  */
 export const photosWithTags = (tags: string | string[]) =>
-   flickr.photoSearch(tags).then(photos => photos.map(loadPhoto));
+   client().photoSearch(tags).then(photos => photos.map(loadPhoto));
 
 /**
  * Convert tags to hash of phrases keyed to their "clean" abbreviation

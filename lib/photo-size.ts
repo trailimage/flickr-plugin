@@ -3,7 +3,7 @@ import { Flickr } from '@toba/flickr';
 import { PhotoSize } from '@trailimage/models';
 
 /**
- * Return size object for first result matching preferences.
+ * Return size object for first result matching size preferences.
  */
 export function loadPhotoSize(
    res: Flickr.PhotoSummary,

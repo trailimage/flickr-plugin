@@ -26,17 +26,17 @@ export function parseDate(text: string): Date {
    return d;
 }
 
-export function loadPhoto(json: Flickr.PhotoSummary, index: number): Photo {
-   const photo = new Photo(json.id, index);
+export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
+   const photo = new Photo(summary.id, index);
 
-   photo.sourceUrl = 'flickr.com/photos/' + json.pathalias + '/' + json.id;
-   photo.title = json.title;
-   photo.description = json.description._content;
+   photo.sourceUrl = 'flickr.com/photos/' + summary.pathalias + '/' + summary.id;
+   photo.title = summary.title;
+   photo.description = summary.description._content;
    // tag slugs are later updated to proper names
-   photo.tags = is.empty(json.tags) ? [] : json.tags.split(' ');
-   photo.dateTaken = parseDate(json.datetaken);
-   photo.latitude = parseFloat(json.latitude);
-   photo.longitude = parseFloat(json.longitude);
+   photo.tags = is.empty(summary.tags) ? [] : summary.tags.split(' ');
+   photo.dateTaken = parseDate(summary.datetaken);
+   photo.latitude = parseFloat(summary.latitude);
+   photo.longitude = parseFloat(summary.longitude);
    //photo.primary = parseInt(json.isprimary) == 1;
 
    photo.outlierDate = false;
