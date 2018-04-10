@@ -1,4 +1,5 @@
 import '@toba/test';
+import './client.test';
 import { photoBlog } from '@trailimage/models';
 import { loadPhotoBlog } from './photo-blog';
 

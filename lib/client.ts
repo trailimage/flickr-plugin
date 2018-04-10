@@ -7,18 +7,22 @@ export function configure(config: FlickrConfig) {
    _config = config;
 }
 
-/**
- * Singleton Flickr client.
- */
-export function client(config: FlickrConfig = null) {
-   if (_client == null) {
-      if (config !== null) {
-         _config = config;
+export const flickr = {
+   get client() {
+      if (_client == null) {
+         if (_config === null) {
+            throw new Error('Invalid Flickr client configuration');
+         }
+         _client = new FlickrClient(_config);
       }
-      if (_config === null) {
-         throw new Error('Invalid Flickr client configuration');
-      }
-      _client = new FlickrClient(_config);
+      return _client;
+   },
+
+   get config() {
+      return _config;
+   },
+
+   configure(config: FlickrConfig) {
+      _config = config;
    }
-   return _client;
-}
+};

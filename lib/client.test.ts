@@ -1,6 +1,6 @@
 import '@toba/test';
 import { FlickrClient, FlickrConfig, Flickr } from '@toba/flickr';
-import { configure, client } from './client';
+import { flickr } from './client';
 
 export const testConfig: FlickrConfig = {
    appID: '72157631007435048',
@@ -30,11 +30,16 @@ export const testConfig: FlickrConfig = {
    }
 };
 
+flickr.configure(testConfig);
+
 test('Throws exception for invalid configuration', () => {
    let e: Error;
    let c: FlickrClient;
+
+   flickr.configure(null);
+
    try {
-      c = client();
+      c = flickr.client;
    } catch (err) {
       e = err;
    }
@@ -47,10 +52,10 @@ test('Allows configuration', () => {
    let e: Error;
    let c: FlickrClient;
 
-   configure(testConfig);
+   flickr.configure(testConfig);
 
    try {
-      c = client();
+      c = flickr.client;
    } catch (err) {
       e = err;
    }

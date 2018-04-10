@@ -2,7 +2,7 @@ import { Flickr } from '@toba/flickr';
 import { is, inDaylightSavings } from '@toba/tools';
 import { Photo } from '@trailimage/models';
 //import { loadPhotoSize } from './photo-size';
-import { config } from './config';
+import { flickr } from './client';
 
 /**
  * Convert text to date object. Date constructor uses local time which we
@@ -15,7 +15,7 @@ export function parseDate(text: string): Date {
    const date: number[] = parts[0].split('-').map(d => parseInt(d));
    const time: number[] = parts[1].split(':').map(d => parseInt(d));
    // convert local date to UTC time by adding offset
-   const h = time[0] - config.timeZoneOffset;
+   const h = time[0] - flickr.config.timeZoneOffset;
    // date constructor automatically converts to local time
    const d = new Date(
       Date.UTC(date[0], date[1] - 1, date[2], h, time[1], time[2])
@@ -29,7 +29,8 @@ export function parseDate(text: string): Date {
 export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    const photo = new Photo(summary.id, index);
 
-   photo.sourceUrl = 'flickr.com/photos/' + summary.pathalias + '/' + summary.id;
+   photo.sourceUrl =
+      'flickr.com/photos/' + summary.pathalias + '/' + summary.id;
    photo.title = summary.title;
    photo.description = summary.description._content;
    // tag slugs are later updated to proper names
@@ -37,7 +38,7 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    photo.dateTaken = parseDate(summary.datetaken);
    photo.latitude = parseFloat(summary.latitude);
    photo.longitude = parseFloat(summary.longitude);
-   //photo.primary = parseInt(json.isprimary) == 1;
+   photo.primary = summary.isprimary == 1;
 
    photo.outlierDate = false;
 
