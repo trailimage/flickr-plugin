@@ -1,2 +1,2 @@
 export { provider } from './lib/provider';
-export { config } from './lib/config';
+export { configure } from './lib/client';

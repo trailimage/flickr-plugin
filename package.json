@@ -15,7 +15,7 @@
    "files": [
       "index.ts",
       "lib/category.ts",
-      "lib/config.ts",
+      "lib/client.ts",
       "lib/exif.ts",
       "lib/photo-blog.ts",
       "lib/photo-size.ts",
