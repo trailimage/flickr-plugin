@@ -146,9 +146,9 @@
   dependencies:
     "@toba/tools" "^1.18.0"
 
-"@toba/flickr@^1.3.0":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@toba/flickr/-/flickr-1.3.4.tgz#f7b2ad5047809dc909e15f0022c015cb17566773"
+"@toba/flickr@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@toba/flickr/-/flickr-1.3.5.tgz#331a13d0b2b93a8970a0532b6c3d8efbd110f4ff"
   dependencies:
     "@toba/logger" "^1.0.0"
     "@toba/oauth" "^1.2.0"
@@ -160,26 +160,26 @@
   resolved "https://registry.yarnpkg.com/@toba/json-ld/-/json-ld-1.1.1.tgz#12a494b879c588f9a98f7eb504459af062fc42ec"
 
 "@toba/logger@^1.0.0", "@toba/logger@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@toba/logger/-/logger-1.0.3.tgz#d9d0b80048cb53b6aef42a66fe1074269dfa1ccd"
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@toba/logger/-/logger-1.0.4.tgz#55c0f43dfb772de2fc3c3dda53b45baea802dc10"
   dependencies:
-    "@toba/tools" "^1.8.0"
+    "@toba/tools" "^1.19.0"
     chalk "^2.3.0"
     flat "^4.0.0"
     logfmt "^1.2.0"
 
 "@toba/map@^1.0.2", "@toba/map@^1.0.4":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@toba/map/-/map-1.0.7.tgz#76a4c3d76a65c458cc41a7d14a991794a1b530e3"
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@toba/map/-/map-1.0.10.tgz#bef78c75bcc269aa5f0b9defe17f0d6dbb1199b2"
   dependencies:
-    "@toba/tools" "^1.16.0"
+    "@toba/tools" "^1.18.0"
     "@types/geojson" "^7946.0.2"
     jszip "^3.1.5"
     xmldom "^0.1.27"
 
 "@toba/oauth@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@toba/oauth/-/oauth-1.2.0.tgz#bc20a9299511d96893c9c04b036fd296762ced22"
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@toba/oauth/-/oauth-1.2.1.tgz#83b3991dc52d1fc0a045e567fc877ddfd7959c91"
   dependencies:
     oauth "^0.9.15"
 
@@ -196,9 +196,9 @@
     jest-localstorage-mock "^2.2.0"
     ts-jest "^22.4.0"
 
-"@toba/tools@^1.16.0", "@toba/tools@^1.18.0", "@toba/tools@^1.8.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-1.18.0.tgz#9f729fd69e162149e73df4172f65ed7b1ade4f87"
+"@toba/tools@^1.18.0", "@toba/tools@^1.19.0":
+  version "1.19.2"
+  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-1.19.2.tgz#7b2d93410e0b59146adcb23c7604df417cac1f6e"
   dependencies:
     zlib "^1.0.5"
 
@@ -225,7 +225,11 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^9.6.0":
+"@types/node@*":
+  version "6.0.105"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.105.tgz#dfcabd3c519b9fed67ec70e788fc04433f4bd8e3"
+
+"@types/node@^9.6.0":
   version "9.6.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.2.tgz#e49ac1adb458835e95ca6487bc20f916b37aff23"
 
@@ -715,16 +719,14 @@ braces@^1.8.2:
     repeat-element "^1.1.2"
 
 braces@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/braces/-/braces-2.3.1.tgz#7086c913b4e5a08dbe37ac0ee6a2500c4ba691bb"
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/braces/-/braces-2.3.2.tgz#5979fd3f14cd531565e5fa2df1abfff1dfaee729"
   dependencies:
     arr-flatten "^1.1.0"
     array-unique "^0.3.2"
-    define-property "^1.0.0"
     extend-shallow "^2.0.1"
     fill-range "^4.0.0"
     isobject "^3.0.1"
-    kind-of "^6.0.2"
     repeat-element "^1.1.2"
     snapdragon "^0.8.1"
     snapdragon-node "^2.0.1"
@@ -968,8 +970,8 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
 
 core-js@^2.4.0, core-js@^2.5.0:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
 
 core-js@~2.3.0:
   version "2.3.0"
@@ -2689,8 +2691,8 @@ lcid@^1.0.0:
     invert-kv "^1.0.0"
 
 left-pad@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.2.0.tgz#d30a73c6b8201d8f7d8e7956ba9616087a68e0ee"
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
 
 leven@^2.1.0:
   version "2.1.0"
@@ -3714,8 +3716,8 @@ require-directory@^2.1.1:
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
 
 require-from-string@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/require-from-string/-/require-from-string-2.0.1.tgz#c545233e9d7da6616e9d59adfb39fc9f588676ff"
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/require-from-string/-/require-from-string-2.0.2.tgz#89a7fdd938261267318eafe14f9c32e598c36909"
 
 require-main-filename@^1.0.1:
   version "1.0.1"

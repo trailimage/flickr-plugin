@@ -5,18 +5,15 @@ import { Photo } from '@trailimage/models';
 import { config } from './config';
 
 /**
- * TODO: consider moving to Flickr module since this seems to be Flickr-
- * specific.
- *
  * Convert text to date object. Date constructor uses local time which we
- * need to defeat since local time will be different on host servers. Example:
+ * need to defeat since local time will be different on host servers.
  *
- *    2012-06-17 17:34:33
+ * @example 2012-06-17 17:34:33
  */
 export function parseDate(text: string): Date {
-   const parts = text.split(' ');
-   const date = parts[0].split('-').map(d => parseInt(d));
-   const time = parts[1].split(':').map(d => parseInt(d));
+   const parts: string[] = text.split(' ');
+   const date: number[] = parts[0].split('-').map(d => parseInt(d));
+   const time: number[] = parts[1].split(':').map(d => parseInt(d));
    // convert local date to UTC time by adding offset
    const h = time[0] - config.timeZoneOffset;
    // date constructor automatically converts to local time

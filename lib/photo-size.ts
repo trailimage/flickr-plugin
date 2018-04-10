@@ -1,38 +1,29 @@
 import { is } from '@toba/tools';
+import { Flickr } from '@toba/flickr';
 import { PhotoSize } from '@trailimage/models';
 
-export function loadPhotoSize(json: any, sizeField: string | string[]): PhotoSize {
-   const size = {
-      url: null as string,
-      width: 0,
-      height: 0,
-      // whether size is empty
-      get isEmpty() {
-         return this.url === null && this.width === 0;
-      }
-   };
+export function loadPhotoSize(
+   res: Flickr.PhotoSummary,
+   ...sizePref: Flickr.SizeCode[]
+): PhotoSize {
    let field: string = null;
 
-   if (is.array<string>(sizeField)) {
-      // iterate through size preferences to find first that isn't empty
-      for (field of sizeField) {
-         // break with given size url assignment if it exists in the photo summary
-         if (!is.empty(json[field])) {
-            break;
-         }
+   // iterate through size preferences to find first that isn't empty
+   for (field of sizePref) {
+      // break with given size url assignment if it exists in the photo summary
+      if (!is.empty(res[field])) {
+         break;
       }
-   } else {
-      field = sizeField;
    }
 
    if (field !== null) {
       const suffix = field.replace('url', '');
 
-      if (!is.empty(json[field])) {
-         size.url = json[field];
-         size.width = parseInt(json['width' + suffix]);
-         size.height = parseInt(json['height' + suffix]);
-      }
+      return new PhotoSize(
+         parseInt(res['width' + suffix]),
+         parseInt(res['height' + suffix]),
+         res[field]
+      );
    }
-   return size;
+   return null;
 }
