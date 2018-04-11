@@ -1,12 +1,12 @@
 import { Flickr } from '@toba/flickr';
 import { EXIF } from '@trailimage/models';
-import { client } from './client';
+import { flickr } from './client';
 
 /**
  * Create EXIF from Flickr data.
  */
 export async function loadEXIF(photoID: string): Promise<EXIF> {
-   const flickrExif: Flickr.Exif[] = await client().getExif(photoID);
+   const flickrExif: Flickr.Exif[] = await flickr.client.getExif(photoID);
    const exif = new EXIF();
 
    exif.artist = parse(flickrExif, 'Artist');
