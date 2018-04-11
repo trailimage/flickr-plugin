@@ -1,8 +1,14 @@
 import '@toba/test';
 import './client.test';
+// import { Flickr } from '@toba/flickr';
+// import { flickr } from './client';
 import { photoBlog } from '@trailimage/models';
 import { loadPhotoBlog } from './photo-blog';
 
+// beforeAll(async () => {
+//    await loadPhotoBlog(photoBlog);
+//    expect(photoBlog.loaded).toBe(true);
+// });
 test('Makes photo blog', async () => {
    expect(photoBlog.loaded).toBe(false);
    await loadPhotoBlog(photoBlog);
@@ -10,12 +16,12 @@ test('Makes photo blog', async () => {
 });
 
 test('Has root categories', () => {
-   expect(photoBlog.categories).toHaveAllProperties(
+   expect(photoBlog.categories.keys()).toEqual([
       'What',
       'When',
       'Where',
       'Who'
-   );
+   ]);
 });
 
 test('Returns category for key', () => {

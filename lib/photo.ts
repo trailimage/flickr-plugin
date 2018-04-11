@@ -34,7 +34,9 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    photo.title = summary.title;
    photo.description = summary.description._content;
    // tag slugs are later updated to proper names
-   photo.tags = is.empty(summary.tags) ? [] : summary.tags.split(' ');
+   photo.tags = is.empty(summary.tags)
+      ? new Set<string>()
+      : new Set<string>(summary.tags.split(' '));
    photo.dateTaken = parseDate(summary.datetaken);
    photo.latitude = parseFloat(summary.latitude);
    photo.longitude = parseFloat(summary.longitude);

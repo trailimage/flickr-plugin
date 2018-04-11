@@ -2,23 +2,25 @@ import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
 import { PhotoBlog } from '@trailimage/models';
-import { client } from './client';
-import { config } from './config';
+import { flickr } from './client';
 import { loadCategory } from './category';
 import { loadPhoto } from './photo';
 
-export function loadPhotoBlog(photoBlog: PhotoBlog) {
+export function loadPhotoBlog(photoBlog: PhotoBlog): Promise<PhotoBlog> {
    // store existing post keys to compute changes
    const hadPostKeys = photoBlog.postKeys();
    // reset changed keys to none
    photoBlog.changedKeys = [];
 
-   return Promise.all([client().getCollections(), client().getAllPhotoTags()])
+   return Promise.all([
+      flickr.client.getCollections(),
+      flickr.client.getAllPhotoTags()
+   ])
       .then(([collections, tags]) => {
          // parse collections and photo tags
          photoBlog.tags = is.value<Flickr.Tag[]>(tags)
             ? parsePhotoTags(tags)
-            : {};
+            : null;
          collections.forEach(c => loadCategory(c, true));
          photoBlog.correlatePosts();
          photoBlog.loaded = true;
@@ -62,7 +64,7 @@ export function loadPhotoBlog(photoBlog: PhotoBlog) {
  * Get first post that includes the given photo.
  */
 export async function postIdWithPhotoId(photoID: string): Promise<string> {
-   const photoSets = await client().getPhotoContext(photoID);
+   const photoSets = await flickr.client.getPhotoContext(photoID);
    return is.value(photoSets) ? photoSets[0].id : null;
 }
 
@@ -70,22 +72,21 @@ export async function postIdWithPhotoId(photoID: string): Promise<string> {
  * All photos with given tags.
  */
 export const photosWithTags = (tags: string | string[]) =>
-   client().photoSearch(tags).then(photos => photos.map(loadPhoto));
+   flickr.client.photoSearch(tags).then(photos => photos.map(loadPhoto));
 
 /**
  * Convert tags to hash of phrases keyed to their "clean" abbreviation
  */
-function parsePhotoTags(rawTags: Flickr.Tag[]): { [key: string]: string } {
-   const exclusions = is.array(config.excludeTags) ? config.excludeTags : [];
-   return rawTags.reduce(
-      (tags, t) => {
-         const text = t.raw[0]._content;
-         // ensure not machine or exluded tag
-         if (text.indexOf('=') == -1 && exclusions.indexOf(text) == -1) {
-            tags[t.clean] = text;
-         }
-         return tags;
-      },
-      {} as { [key: string]: string }
-   );
+function parsePhotoTags(rawTags: Flickr.Tag[]): Map<string, string> {
+   const exclusions = is.array(flickr.config.excludeTags)
+      ? flickr.config.excludeTags
+      : [];
+   return rawTags.reduce((tags, t) => {
+      const text = t.raw[0]._content;
+      // ensure not machine or exluded tag
+      if (text.indexOf('=') == -1 && exclusions.indexOf(text) == -1) {
+         tags.set(t.clean, text);
+      }
+      return tags;
+   }, new Map<string, string>());
 }

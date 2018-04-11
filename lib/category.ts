@@ -1,8 +1,8 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
 import { slug, is } from '@toba/tools';
 import { Category, photoBlog, Post } from '@trailimage/models';
-import { config } from './config';
 import { loadPost } from './post';
+import { flickr } from './client';
 
 /**
  * Create post category from Flickr data.
@@ -14,15 +14,15 @@ export function loadCategory(
    root = false
 ): Category {
    const category = new Category(slug(collection.title), collection.title);
-   const feature: FeatureSet[] = config.featureSets;
-   let exclude = config.excludeSets;
+   const feature: FeatureSet[] = flickr.config.featureSets;
+   let exclude = flickr.config.excludeSets;
    let p: Post = null;
 
    if (exclude === undefined) {
       exclude = [];
    }
    if (root) {
-      photoBlog.categories[category.title] = category;
+      photoBlog.categories.set(category.title, category);
    }
 
    if (is.array(collection.set) && collection.set.length > 0) {
@@ -38,8 +38,8 @@ export function loadCategory(
             }
 
             // add post to category and category to post
-            category.posts.push(p);
-            p.categories[category.key] = category.title;
+            category.posts.add(p);
+            p.categories.set(category.key, category.title);
 
             // also add post to library (faster lookups)
             photoBlog.addPost(p);
