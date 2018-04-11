@@ -1,6 +1,6 @@
 import '@toba/test';
-import './client.test';
 import { Flickr } from '@toba/flickr';
+import { testConfig } from './config';
 import { flickr } from './client';
 import {
    loadPost,
@@ -13,6 +13,7 @@ import {
 let res: Flickr.Collection[];
 
 beforeAll(async () => {
+   flickr.configure(testConfig);
    res = await flickr.client.getCollections();
    expect(res).toBeDefined();
 });

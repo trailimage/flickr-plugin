@@ -1,6 +1,11 @@
 import '@toba/test';
-import './client.test';
 import { loadEXIF } from './exif';
+import { flickr } from './client';
+import { testConfig } from './client.test';
+
+beforeAll(() => {
+   flickr.configure(testConfig);
+});
 
 test('loads photo EXIF', async () => {
    const exif = await loadEXIF('photo-id');

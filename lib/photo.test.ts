@@ -1,12 +1,13 @@
 import '@toba/test';
-import './client.test';
 import { Flickr } from '@toba/flickr';
+import { testConfig } from './config';
 import { flickr } from './client';
 import { parseDate, loadPhoto, photosWithTags } from './photo';
 
 let res: Flickr.SetPhotos;
 
 beforeAll(async () => {
+   flickr.configure(testConfig);
    res = await flickr.client.getSetPhotos('id');
    expect(res).toBeDefined();
 });

@@ -1,17 +1,15 @@
 import '@toba/test';
-import './client.test';
-// import { Flickr } from '@toba/flickr';
-// import { flickr } from './client';
 import { photoBlog } from '@trailimage/models';
+import { flickr } from './client';
+import { testConfig } from './config';
 import { loadPhotoBlog, postIdWithPhotoId } from './photo-blog';
 
 beforeAll(async () => {
+   flickr.configure(testConfig);
    expect(photoBlog.loaded).toBe(false);
    await loadPhotoBlog(photoBlog);
    expect(photoBlog.loaded).toBe(true);
 });
-
-
 
 test('Has root categories', () => {
    expect(photoBlog.categories).toHaveKeys('What', 'When', 'Where', 'Who');
