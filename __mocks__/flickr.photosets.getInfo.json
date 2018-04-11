@@ -1,29 +1,25 @@
 {
    "photoset": {
-      "id": "72157632729508554",
+      "id": "72157687306190173",
       "owner": "60950751@N04",
       "username": "Trail Image",
-      "primary": "8459503474",
-      "secret": "7fcb90b3e9",
-      "server": "8109",
-      "farm": 9,
-      "photos": 13,
-      "count_views": 20,
+      "primary": "37124466540",
+      "secret": "6d8418a638",
+      "server": "4346",
+      "farm": 5,
+      "photos": 32,
+      "count_views": 1,
       "count_comments": 0,
-      "count_photos": 13,
+      "count_photos": 32,
       "count_videos": 0,
-      "title": {
-         "_content": "Ruminations"
-      },
+      "title": { "_content": "Brother Ride 2017: North Fork" },
       "description": {
          "_content":
-            "Photography’s highest form is sometimes likened to poetry, capturing experiences that defy denotation. Both are diminished to the extent they require explanation, some say, so hopefully coercing them to explain each other is a right born of two wrongs."
+            "On the third and fourth days of our annual Brother Ride, we leave the beautiful campsite along the shore of high mountain Big Trinity Lake with plans to descend to historic Atlanta, Idaho, then venture on trails unknown to camp along the North Fork of the Boise River before returning home.\n\nVideo (1024x576): <a href=\"http://youtu.be/uGxqyqQPSzU\" rel=\"nofollow\">youtu.be/uGxqyqQPSzU</a>\n"
       },
       "can_comment": 1,
-      "date_create": "1360438556",
-      "date_update": "1465078040",
-      "coverphoto_server": 0,
-      "coverphoto_farm": 0
+      "date_create": "1506644531",
+      "date_update": "1511224561"
    },
    "stat": "ok"
 }

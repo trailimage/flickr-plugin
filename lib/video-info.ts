@@ -15,9 +15,12 @@ export function loadVideoInfo(setInfo: Flickr.SetInfo): VideoInfo {
    const d = setInfo.description._content;
 
    if (re.test(d)) {
+      re.lastIndex = 0;
       const match = re.exec(d);
-      // remove video link from description
-      setInfo.description._content = d.replace(match[0], '');
+      // remove video link and any trailing space from description
+      setInfo.description._content = d
+         .replace(match[0], '')
+         .replace(/\s+$/, '');
       return new VideoInfo(match[4], parseInt(match[2]), parseInt(match[3]));
    } else {
       return null;
