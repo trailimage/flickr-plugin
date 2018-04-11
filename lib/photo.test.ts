@@ -2,13 +2,17 @@ import '@toba/test';
 import './client.test';
 import { Flickr } from '@toba/flickr';
 import { flickr } from './client';
-import { parseDate, loadPhoto } from './photo';
+import { parseDate, loadPhoto, photosWithTags } from './photo';
 
 let res: Flickr.SetPhotos;
 
 beforeAll(async () => {
    res = await flickr.client.getSetPhotos('id');
    expect(res).toBeDefined();
+});
+
+test('Finds photos with tags', () => {
+   expect(photosWithTags).toBeDefined();
 });
 
 test('Converts Flickr date string to Date', () => {
@@ -31,7 +35,7 @@ test('Loads photo from Flickr data', () => {
    expect(photo.primary).toBe(true);
    expect(photo.longitude).toBe(-117.10555);
    expect(photo.sourceUrl).toBe('flickr.com/photos/trailimage/8459503474');
-   expect(photo.tags).toEqual([
+   expect(photo.tags).toHaveValues(
       'snow',
       'night',
       'fire',
@@ -39,5 +43,5 @@ test('Loads photo from Flickr data', () => {
       'abbott',
       'jeremyabbott',
       'jesseabbott'
-   ]);
+   );
 });

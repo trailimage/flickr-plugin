@@ -129,7 +129,7 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@toba/build@^1.3.3":
+"@toba/build@^1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@toba/build/-/build-1.4.0.tgz#9f2614b03ed6a42c3e7f89dac6f6e6964e614987"
   dependencies:
@@ -159,7 +159,7 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@toba/json-ld/-/json-ld-1.1.1.tgz#12a494b879c588f9a98f7eb504459af062fc42ec"
 
-"@toba/logger@^1.0.0", "@toba/logger@^1.0.3":
+"@toba/logger@^1.0.0", "@toba/logger@^1.0.3", "@toba/logger@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@toba/logger/-/logger-1.0.4.tgz#55c0f43dfb772de2fc3c3dda53b45baea802dc10"
   dependencies:
@@ -183,12 +183,12 @@
   dependencies:
     oauth "^0.9.15"
 
-"@toba/test@^1.10.0":
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.10.1.tgz#46b4783f2ee81285083377dfa75712ac99227590"
+"@toba/test@^1.11.0":
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.11.3.tgz#6bbf13e6f175c86c9c9b9e75905d5d28f2c96ff5"
   dependencies:
-    "@toba/logger" "^1.0.3"
-    "@toba/tools" "^1.18.0"
+    "@toba/logger" "^1.0.4"
+    "@toba/tools" "^1.19.0"
     "@types/jest" "^22.2.0"
     "@types/node" "^9.6.0"
     "@types/node-fetch" "^1.6.7"

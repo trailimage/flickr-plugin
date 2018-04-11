@@ -3,25 +3,18 @@ import './client.test';
 // import { Flickr } from '@toba/flickr';
 // import { flickr } from './client';
 import { photoBlog } from '@trailimage/models';
-import { loadPhotoBlog } from './photo-blog';
+import { loadPhotoBlog, postIdWithPhotoId } from './photo-blog';
 
-// beforeAll(async () => {
-//    await loadPhotoBlog(photoBlog);
-//    expect(photoBlog.loaded).toBe(true);
-// });
-test('Makes photo blog', async () => {
+beforeAll(async () => {
    expect(photoBlog.loaded).toBe(false);
    await loadPhotoBlog(photoBlog);
    expect(photoBlog.loaded).toBe(true);
 });
 
+
+
 test('Has root categories', () => {
-   expect(photoBlog.categories.keys()).toEqual([
-      'What',
-      'When',
-      'Where',
-      'Who'
-   ]);
+   expect(photoBlog.categories).toHaveKeys('What', 'When', 'Where', 'Who');
 });
 
 test('Returns category for key', () => {
@@ -50,14 +43,14 @@ test('Returns keys for category', () => {
 });
 
 test('Includes all photo tags with their full names', () => {
-   expect(photoBlog.tags).toHaveAllProperties(
+   expect(photoBlog.tags).toHaveKeys(
       'algae',
       'andersonranchreservoir',
       'dam',
       'horse',
       'jason'
    );
-   expect(photoBlog.tags['andersonranchreservoir']).toBe(
+   expect(photoBlog.tags.get('andersonranchreservoir')).toBe(
       'Anderson Ranch Reservoir'
    );
 });

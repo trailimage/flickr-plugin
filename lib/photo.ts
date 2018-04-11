@@ -26,6 +26,12 @@ export function parseDate(text: string): Date {
    return d;
 }
 
+/**
+ * All photos with given tags.
+ */
+export const photosWithTags = (tags: string | string[]) =>
+   flickr.client.photoSearch(tags).then(photos => photos.map(loadPhoto));
+
 export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    const photo = new Photo(summary.id, index);
 

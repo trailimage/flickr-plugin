@@ -2,13 +2,23 @@ import '@toba/test';
 import './client.test';
 import { Flickr } from '@toba/flickr';
 import { flickr } from './client';
-import { loadPost, timeStampToDate, loadInfo, loadPhotos } from './post';
+import {
+   loadPost,
+   timeStampToDate,
+   loadInfo,
+   loadPhotos,
+   postIdWithPhotoId
+} from './post';
 
 let res: Flickr.Collection[];
 
 beforeAll(async () => {
    res = await flickr.client.getCollections();
    expect(res).toBeDefined();
+});
+
+test('Finds post containing photo', () => {
+   expect(postIdWithPhotoId).toBeDefined();
 });
 
 test('Creates date from timestamp', () => {

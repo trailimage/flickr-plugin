@@ -36,6 +36,14 @@ export const timeStampToIsoString = (timestamp: number | Date) =>
    timeStampToDate(timestamp).toISOString();
 
 /**
+ * Get first post that includes the given photo.
+ */
+export async function postIdWithPhotoId(photoID: string): Promise<string> {
+   const photoSets = await flickr.client.getPhotoContext(photoID);
+   return is.value(photoSets) ? photoSets[0].id : null;
+}
+
+/**
  * Create post from Flickr photo set.
  *
  * @param chronoligical Whether set photos occurred together at a point in time
