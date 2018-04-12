@@ -1,5 +1,6 @@
 import '@toba/test';
 import { Flickr } from '@toba/flickr';
+import { Photo } from '@trailimage/models';
 import { testConfig } from './config';
 import { flickr } from './client';
 import { parseDate, loadPhoto, photosWithTags } from './photo';
@@ -12,8 +13,10 @@ beforeAll(async () => {
    expect(res).toBeDefined();
 });
 
-test('Finds photos with tags', () => {
-   expect(photosWithTags).toBeDefined();
+test('Finds photos with tags', async () => {
+   const photos: Photo[] = await photosWithTags('tag1', 'tag2');
+   expect(photos).toBeInstanceOf(Array);
+   expect(photos[0].id).toBe('21365383716');
 });
 
 test('Converts Flickr date string to Date', () => {

@@ -22,7 +22,7 @@ export function loadCategory(
       exclude = [];
    }
    if (root) {
-      photoBlog.categories.set(category.title, category);
+      photoBlog.categories.set(slug(category.title), category);
    }
 
    if (is.array(collection.set) && collection.set.length > 0) {

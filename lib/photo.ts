@@ -29,23 +29,30 @@ export function parseDate(text: string): Date {
 /**
  * All photos with given tags.
  */
-export const photosWithTags = (tags: string | string[]) =>
+export const photosWithTags = (...tags: string[]) =>
    flickr.client.photoSearch(tags).then(photos => photos.map(loadPhoto));
 
 export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    const photo = new Photo(summary.id, index);
 
-   photo.sourceUrl =
-      'flickr.com/photos/' + summary.pathalias + '/' + summary.id;
+   photo.sourceUrl = `flickr.com/photos/${summary.pathalias}/${summary.id}`;
    photo.title = summary.title;
-   photo.description = summary.description._content;
+   photo.description = is.value(summary.description)
+      ? summary.description._content
+      : null;
    // tag slugs are later updated to proper names
    photo.tags = is.empty(summary.tags)
       ? new Set<string>()
       : new Set<string>(summary.tags.split(' '));
-   photo.dateTaken = parseDate(summary.datetaken);
-   photo.latitude = parseFloat(summary.latitude);
-   photo.longitude = parseFloat(summary.longitude);
+   photo.dateTaken = is.value(summary.datetaken)
+      ? parseDate(summary.datetaken)
+      : null;
+   photo.latitude = is.value(summary.latitude)
+      ? parseFloat(summary.latitude)
+      : null;
+   photo.longitude = is.value(summary.longitude)
+      ? parseFloat(summary.longitude)
+      : null;
    photo.primary = summary.isprimary == 1;
 
    photo.outlierDate = false;

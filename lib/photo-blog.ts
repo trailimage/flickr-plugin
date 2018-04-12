@@ -5,7 +5,13 @@ import { PhotoBlog } from '@trailimage/models';
 import { flickr } from './client';
 import { loadCategory } from './category';
 
-export function loadPhotoBlog(photoBlog: PhotoBlog): Promise<PhotoBlog> {
+/**
+ * @param async Whether to load set information asynchronously
+ */
+export function loadPhotoBlog(
+   photoBlog: PhotoBlog,
+   async = true
+): Promise<PhotoBlog> {
    // store existing post keys to compute changes
    const hadPostKeys = photoBlog.postKeys();
    // reset changed keys to none
@@ -30,10 +36,14 @@ export function loadPhotoBlog(photoBlog: PhotoBlog): Promise<PhotoBlog> {
             } photo posts from Flickr: beginning detail retrieval`
          );
          // retrieve additional post info without waiting for it to finish
-         Promise.all(photoBlog.posts.map(p => p.getInfo())).then(() => {
-            photoBlog.postInfoLoaded = true;
-            log.info('Finished loading post details');
-         });
+         const all = Promise.all(photoBlog.posts.map(p => p.getInfo())).then(
+            () => {
+               photoBlog.postInfoLoaded = true;
+               log.info('Finished loading post details');
+            }
+         );
+
+         return async ? null : all;
       })
       .then(() => {
          // find changed post and category keys so their caches can be invalidated

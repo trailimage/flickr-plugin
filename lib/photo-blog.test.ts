@@ -2,17 +2,17 @@ import '@toba/test';
 import { photoBlog } from '@trailimage/models';
 import { flickr } from './client';
 import { testConfig } from './config';
-import { loadPhotoBlog, postIdWithPhotoId } from './photo-blog';
+import { loadPhotoBlog } from './photo-blog';
 
 beforeAll(async () => {
    flickr.configure(testConfig);
    expect(photoBlog.loaded).toBe(false);
-   await loadPhotoBlog(photoBlog);
+   await loadPhotoBlog(photoBlog, false);
    expect(photoBlog.loaded).toBe(true);
 });
 
 test('Has root categories', () => {
-   expect(photoBlog.categories).toHaveKeys('What', 'When', 'Where', 'Who');
+   expect(photoBlog.categories).toHaveKeys('what', 'when', 'where', 'who');
 });
 
 test('Returns category for key', () => {
@@ -31,7 +31,7 @@ test('Returns category for key', () => {
 
 test('Returns keys for category', () => {
    const all = photoBlog.categoryKeys();
-   const two = photoBlog.categoryKeys(['When', 'Bicycle']);
+   const two = photoBlog.categoryKeys('when', 'bicycle');
 
    expect(all).toHaveLength(62);
    expect(all).toContain('what/jeep-wrangler');
@@ -62,14 +62,13 @@ test('Finds posts by ID or key', () => {
 
    expect(post1).toBeDefined();
    expect(post1.title).toBe('Spring Fish & Chips');
-   expect(post1.photoCount).toBe(13);
+   expect(post1.photoCount).toBe(32);
 
    const post2 = photoBlog.postWithKey('owyhee-snow-and-sand/lowlands');
 
    expect(post2).toBeDefined();
    expect(post2.title).toBe('Owyhee Snow and Sand');
    expect(post2.subTitle).toBe('Lowlands');
-   expect(post2.photoCount).toBe(13);
 });
 
 test('Removes posts', () => {

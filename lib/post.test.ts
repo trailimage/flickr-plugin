@@ -18,8 +18,9 @@ beforeAll(async () => {
    expect(res).toBeDefined();
 });
 
-test('Finds post containing photo', () => {
-   expect(postIdWithPhotoId).toBeDefined();
+test('Finds post containing photo', async () => {
+   const postID: string = await postIdWithPhotoId('photo-id');
+   expect(postID).toBe('72157632729508554');
 });
 
 test('Creates date from timestamp', () => {

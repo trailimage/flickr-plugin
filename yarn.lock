@@ -147,8 +147,8 @@
     "@toba/tools" "^1.18.0"
 
 "@toba/flickr@^1.3.5":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@toba/flickr/-/flickr-1.3.6.tgz#1d3575de1d84d09aa33d99c941e6baee77f2d179"
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/@toba/flickr/-/flickr-1.3.7.tgz#12916b80adf98dc00c159963ddf7dcb9342de012"
   dependencies:
     "@toba/logger" "^1.0.0"
     "@toba/oauth" "^1.2.0"
@@ -184,8 +184,8 @@
     oauth "^0.9.15"
 
 "@toba/test@^1.11.0":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.11.3.tgz#6bbf13e6f175c86c9c9b9e75905d5d28f2c96ff5"
+  version "1.12.2"
+  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.12.2.tgz#fe4df8c3147cb2b577230465d40d6b3bf3260d8f"
   dependencies:
     "@toba/logger" "^1.0.4"
     "@toba/tools" "^1.19.0"
@@ -216,8 +216,8 @@
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.2.tgz#0bd0a01ef04e813c2b7580318da9e37c2eadea9c"
 
 "@types/jest@^22.2.0":
-  version "22.2.2"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.2.tgz#afe5dacbd00d65325f52da0ed3e76e259629ac9d"
+  version "22.2.3"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
 
 "@types/node-fetch@^1.6.7":
   version "1.6.8"
