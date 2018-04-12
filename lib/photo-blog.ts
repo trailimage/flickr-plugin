@@ -8,7 +8,7 @@ import { loadCategory } from './category';
 /**
  * @param async Whether to load set information asynchronously
  */
-export function loadPhotoBlog(
+export async function loadPhotoBlog(
    photoBlog: PhotoBlog,
    async = true
 ): Promise<PhotoBlog> {
@@ -17,56 +17,56 @@ export function loadPhotoBlog(
    // reset changed keys to none
    photoBlog.changedKeys = [];
 
-   return Promise.all([
+   const [collections, tags] = await Promise.all([
       flickr.client.getCollections(),
       flickr.client.getAllPhotoTags()
-   ])
-      .then(([collections, tags]) => {
-         // parse collections and photo tags
-         photoBlog.tags = is.value<Flickr.Tag[]>(tags)
-            ? parsePhotoTags(tags)
-            : null;
-         collections.forEach(c => loadCategory(c, true));
-         photoBlog.correlatePosts();
-         photoBlog.loaded = true;
+   ]);
 
-         log.info(
-            `Loaded ${
-               photoBlog.posts.length
-            } photo posts from Flickr: beginning detail retrieval`
-         );
-         // retrieve additional post info without waiting for it to finish
-         const all = Promise.all(photoBlog.posts.map(p => p.getInfo())).then(
-            () => {
-               photoBlog.postInfoLoaded = true;
-               log.info('Finished loading post details');
+   // parse collections and photo tags
+   photoBlog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : null;
+   collections.forEach(c => loadCategory(c, true));
+   photoBlog.correlatePosts();
+   photoBlog.loaded = true;
+
+   log.info(
+      `Loaded ${
+         photoBlog.posts.length
+      } photo posts from Flickr: beginning detail retrieval`
+   );
+
+   // retrieve additional post info without waiting for it to finish
+   const postInfo = Promise.all(photoBlog.posts.map(p => p.getInfo())).then(
+      () => {
+         photoBlog.postInfoLoaded = true;
+         log.info('Finished loading post details');
+      }
+   );
+
+   if (!async) {
+      await postInfo;
+   }
+
+   // find changed post and category keys so their caches can be invalidated
+   if (hadPostKeys.length > 0) {
+      let changedKeys: string[] = [];
+      photoBlog.posts
+         .filter(p => hadPostKeys.indexOf(p.key) == -1)
+         .forEach(p => {
+            log.info('Found new post "%s"', p.title);
+            // all post categories will need to be refreshed
+            changedKeys = changedKeys.concat(Object.keys(p.categories));
+            // update adjecent posts to correct next/previous links
+            if (is.value(p.next)) {
+               changedKeys.push(p.next.key);
             }
-         );
+            if (is.value(p.previous)) {
+               changedKeys.push(p.previous.key);
+            }
+         });
+      photoBlog.changedKeys = changedKeys;
+   }
 
-         return async ? null : all;
-      })
-      .then(() => {
-         // find changed post and category keys so their caches can be invalidated
-         if (hadPostKeys.length > 0) {
-            let changedKeys: string[] = [];
-            photoBlog.posts
-               .filter(p => hadPostKeys.indexOf(p.key) == -1)
-               .forEach(p => {
-                  log.info('Found new post "%s"', p.title);
-                  // all post categories will need to be refreshed
-                  changedKeys = changedKeys.concat(Object.keys(p.categories));
-                  // update adjecent posts to correct next/previous links
-                  if (is.value(p.next)) {
-                     changedKeys.push(p.next.key);
-                  }
-                  if (is.value(p.previous)) {
-                     changedKeys.push(p.previous.key);
-                  }
-               });
-            photoBlog.changedKeys = changedKeys;
-         }
-         return photoBlog;
-      });
+   return photoBlog;
 }
 
 /**
