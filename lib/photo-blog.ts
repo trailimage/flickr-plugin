@@ -43,6 +43,7 @@ export async function loadPhotoBlog(
    );
 
    if (!async) {
+      // if async is disabled then wait for post information to load
       await postInfo;
    }
 
