@@ -31,7 +31,7 @@ test('Returns category for key', () => {
 
 test('Returns keys for category', () => {
    const all = photoBlog.categoryKeys();
-   const two = photoBlog.categoryKeys('when', 'bicycle');
+   const two = photoBlog.categoryKeys('When', 'Bicycle');
 
    expect(all).toHaveLength(62);
    expect(all).toContain('what/jeep-wrangler');
@@ -89,7 +89,7 @@ test('Finds photos with tags', async () => {
    const photos = await photoBlog.getPhotosWithTags('horse');
    expect(photos).toBeDefined();
    expect(photos).toBeInstanceOf(Array);
-   expect(photos).toHaveLength(10);
+   expect(photos.length).toBe(19);
    expect(photos[0]).toHaveAllProperties('id', 'size');
 });
 
@@ -102,7 +102,7 @@ test('Creates list of post keys', () => {
 test('Can be emptied', () => {
    photoBlog.empty();
    expect(photoBlog.loaded).toBe(false);
-   expect(photoBlog.posts).toBeNull();
+   expect(photoBlog.posts).toEqual([]);
 });
 
 test('Reloads blog and identifies changed cache keys', async () => {

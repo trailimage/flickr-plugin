@@ -30,6 +30,15 @@ test('Assigns sub-categories', () => {
    expect(subcat.isChild).toBe(true);
 });
 
+test('Finds sub-categories', () => {
+   const c = loadCategory(res[3]);
+   expect(c.title).toBe('What');
+
+   const subcat = c.getSubcategory('what/bicycle');
+   expect(subcat).toBeDefined();
+   expect(subcat.title).toBe('Bicycle');
+});
+
 test('Assigns posts', () => {
    const c = loadCategory(res[2]);
    expect(c.title).toBe('Who');
