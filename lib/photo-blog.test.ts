@@ -9,6 +9,7 @@ beforeAll(async () => {
    expect(photoBlog.loaded).toBe(false);
    await loadPhotoBlog(photoBlog, false);
    expect(photoBlog.loaded).toBe(true);
+   expect(photoBlog.posts.length).toBe(168);
 });
 
 test('Has root categories', () => {
@@ -33,10 +34,10 @@ test('Returns keys for category', () => {
    const all = photoBlog.categoryKeys();
    const two = photoBlog.categoryKeys('When', 'Bicycle');
 
-   expect(all).toHaveLength(62);
+   expect(all.length).toBe(62);
    expect(all).toContain('what/jeep-wrangler');
 
-   expect(two).toHaveLength(2);
+   expect(two.length).toBe(2);
    expect(two).toContain('what/bicycle');
 });
 
@@ -110,12 +111,13 @@ test('Reloads blog and identifies changed cache keys', async () => {
       'owyhee-snow-and-sand/lowlands',
       'kuna-cave-fails-to-impress'
    ];
+   await loadPhotoBlog(photoBlog, false);
    photoBlog.remove(...postKeys);
-
-   await loadPhotoBlog(photoBlog);
+   await loadPhotoBlog(photoBlog, false);
 
    const changes = photoBlog.changedKeys;
 
+   // changes should include the posts and their categories
    expect(changes).toBeInstanceOf(Array);
    expect(changes).toContain(postKeys[0]);
    expect(changes).toContain(postKeys[1]);

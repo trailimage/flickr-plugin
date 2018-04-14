@@ -6,6 +6,7 @@ import { flickr } from './client';
 import { loadCategory } from './category';
 
 /**
+ * Load blog categories, photo tags and post summaries from Flickr data.
  * @param async Whether to load set information asynchronously
  */
 export async function loadPhotoBlog(
@@ -55,7 +56,7 @@ export async function loadPhotoBlog(
          .forEach(p => {
             log.info('Found new post "%s"', p.title);
             // all post categories will need to be refreshed
-            changedKeys = changedKeys.concat(Object.keys(p.categories));
+            changedKeys = changedKeys.concat(Array.from(p.categories.keys()));
             // update adjecent posts to correct next/previous links
             if (is.value(p.next)) {
                changedKeys.push(p.next.key);
