@@ -1,29 +1,29 @@
 import '@toba/test';
-import { photoBlog } from '@trailimage/models';
+import { blog } from '@trailimage/models';
 import { flickr } from './client';
-import { testConfig } from './config';
+import { testConfig } from './.test-data';
 import { loadPhotoBlog } from './photo-blog';
 
 beforeAll(async () => {
    flickr.configure(testConfig);
-   expect(photoBlog.loaded).toBe(false);
-   await loadPhotoBlog(photoBlog, false);
-   expect(photoBlog.loaded).toBe(true);
-   expect(photoBlog.posts.length).toBe(168);
+   expect(blog.loaded).toBe(false);
+   await loadPhotoBlog(blog, false);
+   expect(blog.loaded).toBe(true);
+   expect(blog.posts.length).toBe(168);
 });
 
 test('Has root categories', () => {
-   expect(photoBlog.categories).toHaveKeys('what', 'when', 'where', 'who');
+   expect(blog.categories).toHaveKeys('what', 'when', 'where', 'who');
 });
 
 test('Returns category for key', () => {
-   const what = photoBlog.categoryWithKey('what');
+   const what = blog.categoryWithKey('what');
    expect(what).toBeDefined();
    expect(what.title).toBe('What');
    expect(what.isChild).toBe(false);
    expect(what.isParent).toBe(true);
 
-   const bicycle = photoBlog.categoryWithKey('what/bicycle');
+   const bicycle = blog.categoryWithKey('what/bicycle');
    expect(bicycle).toBeDefined();
    expect(bicycle.title).toBe('Bicycle');
    expect(bicycle.isChild).toBe(true);
@@ -31,8 +31,8 @@ test('Returns category for key', () => {
 });
 
 test('Returns keys for category', () => {
-   const all = photoBlog.categoryKeys();
-   const two = photoBlog.categoryKeys('When', 'Bicycle');
+   const all = blog.categoryKeys();
+   const two = blog.categoryKeys('When', 'Bicycle');
 
    expect(all.length).toBe(62);
    expect(all).toContain('what/jeep-wrangler');
@@ -42,30 +42,30 @@ test('Returns keys for category', () => {
 });
 
 test('Includes all photo tags with their full names', () => {
-   expect(photoBlog.tags).toHaveKeys(
+   expect(blog.tags).toHaveKeys(
       'algae',
       'andersonranchreservoir',
       'dam',
       'horse',
       'jason'
    );
-   expect(photoBlog.tags.get('andersonranchreservoir')).toBe(
+   expect(blog.tags.get('andersonranchreservoir')).toBe(
       'Anderson Ranch Reservoir'
    );
 });
 
 test('Has post summaries', () => {
-   expect(photoBlog.posts).toHaveLength(168);
+   expect(blog.posts).toHaveLength(168);
 });
 
 test('Finds posts by ID or key', () => {
-   const post1 = photoBlog.postWithID('72157666685116730');
+   const post1 = blog.postWithID('72157666685116730');
 
    expect(post1).toBeDefined();
    expect(post1.title).toBe('Spring Fish & Chips');
    expect(post1.photoCount).toBe(32);
 
-   const post2 = photoBlog.postWithKey('owyhee-snow-and-sand/lowlands');
+   const post2 = blog.postWithKey('owyhee-snow-and-sand/lowlands');
 
    expect(post2).toBeDefined();
    expect(post2.title).toBe('Owyhee Snow and Sand');
@@ -73,21 +73,21 @@ test('Finds posts by ID or key', () => {
 });
 
 test('Removes posts', () => {
-   let post = photoBlog.postWithKey('owyhee-snow-and-sand/lowlands');
+   let post = blog.postWithKey('owyhee-snow-and-sand/lowlands');
    expect(post).toBeDefined();
-   photoBlog.remove(post.key);
-   post = photoBlog.postWithKey('owyhee-snow-and-sand/lowlands');
+   blog.remove(post.key);
+   post = blog.postWithKey('owyhee-snow-and-sand/lowlands');
    expect(post).not.toBeDefined();
 });
 
 test('Finds post having a photo', async () => {
-   const post = await photoBlog.postWithPhoto('8459503474');
+   const post = await blog.postWithPhoto('8459503474');
    expect(post).toBeDefined();
    expect(post).toHaveProperty('id', '72157632729508554');
 });
 
 test('Finds photos with tags', async () => {
-   const photos = await photoBlog.getPhotosWithTags('horse');
+   const photos = await blog.getPhotosWithTags('horse');
    expect(photos).toBeDefined();
    expect(photos).toBeInstanceOf(Array);
    expect(photos.length).toBe(19);
@@ -95,15 +95,15 @@ test('Finds photos with tags', async () => {
 });
 
 test('Creates list of post keys', () => {
-   const keys = photoBlog.postKeys();
+   const keys = blog.postKeys();
    expect(keys).toHaveLength(167);
    expect(keys).toContain('brother-ride-2015/simmons-creek');
 });
 
 test('Can be emptied', () => {
-   photoBlog.empty();
-   expect(photoBlog.loaded).toBe(false);
-   expect(photoBlog.posts).toEqual([]);
+   blog.empty();
+   expect(blog.loaded).toBe(false);
+   expect(blog.posts).toEqual([]);
 });
 
 test('Reloads blog and identifies changed cache keys', async () => {
@@ -111,11 +111,11 @@ test('Reloads blog and identifies changed cache keys', async () => {
       'owyhee-snow-and-sand/lowlands',
       'kuna-cave-fails-to-impress'
    ];
-   await loadPhotoBlog(photoBlog, false);
-   photoBlog.remove(...postKeys);
-   await loadPhotoBlog(photoBlog, false);
+   await loadPhotoBlog(blog, false);
+   blog.remove(...postKeys);
+   await loadPhotoBlog(blog, false);
 
-   const changes = photoBlog.changedKeys;
+   const changes = blog.changedKeys;
 
    // changes should include the posts and their categories
    expect(changes).toBeInstanceOf(Array);

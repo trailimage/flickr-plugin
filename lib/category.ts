@@ -1,8 +1,8 @@
-import { Flickr, FeatureSet } from '@toba/flickr';
-import { slug, is } from '@toba/tools';
-import { Category, photoBlog, Post } from '@trailimage/models';
-import { loadPost } from './post';
+import { FeatureSet, Flickr } from '@toba/flickr';
+import { is, slug } from '@toba/tools';
+import { Category, Post, blog } from '@trailimage/models';
 import { flickr } from './client';
+import { loadPost } from './post';
 
 /**
  * Create post category from Flickr data.
@@ -22,7 +22,7 @@ export function loadCategory(
       exclude = [];
    }
    if (root) {
-      photoBlog.categories.set(slug(category.title), category);
+      blog.categories.set(slug(category.title), category);
    }
 
    if (is.array(collection.set) && collection.set.length > 0) {
@@ -30,7 +30,7 @@ export function loadCategory(
       for (const s of collection.set) {
          if (exclude.indexOf(s.id) == -1) {
             // see if post is already present in the library in another category
-            p = photoBlog.postWithID(s.id);
+            p = blog.postWithID(s.id);
 
             // create post if it isn't part of an already added category
             if (!is.value<Post>(p)) {
@@ -42,7 +42,7 @@ export function loadCategory(
             p.categories.set(category.key, category.title);
 
             // also add post to library (faster lookups)
-            photoBlog.addPost(p);
+            blog.addPost(p);
          }
       }
    }
@@ -60,7 +60,7 @@ export function loadCategory(
       for (const f of feature) {
          const p = loadPost(f, false);
          p.feature = true;
-         photoBlog.addPost(p);
+         blog.addPost(p);
       }
    }
    return category;

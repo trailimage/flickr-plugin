@@ -1,7 +1,7 @@
 import '@toba/test';
 import { loadEXIF } from './exif';
 import { flickr } from './client';
-import { testConfig } from './client.test';
+import { testConfig } from './.test-data';
 
 beforeAll(() => {
    flickr.configure(testConfig);

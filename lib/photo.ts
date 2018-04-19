@@ -1,5 +1,5 @@
 import { Flickr } from '@toba/flickr';
-import { is, inDaylightSavings } from '@toba/tools';
+import { inDaylightSavings, is } from '@toba/tools';
 import { Photo } from '@trailimage/models';
 //import { loadPhotoSize } from './photo-size';
 import { flickr } from './client';

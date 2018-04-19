@@ -4,7 +4,7 @@ import { log } from '@toba/logger';
 import {
    Post,
    Photo,
-   photoBlog,
+   blog,
    identifyOutliers,
    config as modelConfig
 } from '@trailimage/models';
@@ -118,7 +118,7 @@ function updatePhotos(p: Post, setPhotos: Flickr.SetPhotos): Photo[] {
       }
 
       // also updates photo tag keys to full names
-      p.photoTagList = photoBlog.photoTagList(p.photos);
+      p.photoTagList = blog.photoTagList(p.photos);
 
       if (p.chronological) {
          identifyOutliers(p.photos);

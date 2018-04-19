@@ -1,9 +1,9 @@
-import '@toba/test';
 import { Flickr } from '@toba/flickr';
+import '@toba/test';
 import { Photo } from '@trailimage/models';
-import { testConfig } from './config';
 import { flickr } from './client';
-import { parseDate, loadPhoto, photosWithTags } from './photo';
+import { testConfig } from './.test-data';
+import { loadPhoto, parseDate, photosWithTags } from './photo';
 
 let res: Flickr.SetPhotos;
 

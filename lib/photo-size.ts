@@ -1,5 +1,5 @@
-import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
+import { is } from '@toba/tools';
 import { PhotoSize } from '@trailimage/models';
 
 /**

@@ -1,9 +1,6 @@
-import { FlickrConfig, Flickr } from '@toba/flickr';
 import { config as modelConfig } from '@trailimage/models';
 import { provider } from './provider';
-
-modelConfig.artistsToNormalize = /Jason/;
-modelConfig.providers.post = provider;
+import { FlickrConfig, Flickr } from '@toba/flickr';
 
 export const testConfig: FlickrConfig = {
    appID: '72157631007435048',
@@ -32,3 +29,6 @@ export const testConfig: FlickrConfig = {
       }
    }
 };
+
+modelConfig.artistsToNormalize = /Jason/;
+modelConfig.providers.post = provider;

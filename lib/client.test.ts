@@ -1,7 +1,7 @@
-import '@toba/test';
 import { FlickrClient } from '@toba/flickr';
+import '@toba/test';
 import { flickr } from './client';
-import { testConfig } from './config';
+import { testConfig } from './.test-data';
 
 test('Throws exception for invalid configuration', () => {
    let e: Error;

@@ -1,8 +1,8 @@
-import '@toba/test';
 import { Flickr } from '@toba/flickr';
-import { testConfig } from './config';
+import '@toba/test';
 import { loadCategory } from './category';
 import { flickr } from './client';
+import { testConfig } from './.test-data';
 
 let res: Flickr.Collection[];
 

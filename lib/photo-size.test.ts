@@ -1,8 +1,8 @@
-import '@toba/test';
 import { Flickr } from '@toba/flickr';
-import { testConfig } from './config';
-import { loadPhotoSize } from './photo-size';
+import '@toba/test';
 import { flickr } from './client';
+import { testConfig } from './.test-data';
+import { loadPhotoSize } from './photo-size';
 
 let res: Flickr.SetPhotos;
 

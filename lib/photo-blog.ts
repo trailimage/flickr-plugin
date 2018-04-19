@@ -1,9 +1,9 @@
-import { is } from '@toba/tools';
 import { Flickr } from '@toba/flickr';
 import { log } from '@toba/logger';
+import { is } from '@toba/tools';
 import { PhotoBlog } from '@trailimage/models';
-import { flickr } from './client';
 import { loadCategory } from './category';
+import { flickr } from './client';
 
 /**
  * Load blog categories, photo tags and post summaries from Flickr data.
