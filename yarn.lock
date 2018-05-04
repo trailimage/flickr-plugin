@@ -129,9 +129,9 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@toba/build@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@toba/build/-/build-1.4.0.tgz#9f2614b03ed6a42c3e7f89dac6f6e6964e614987"
+"@toba/build@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@toba/build/-/build-1.5.0.tgz#fe6af91a7879954be8a32dafa4cfa3f61e11b6a3"
   dependencies:
     stylelint "^9.1.0"
     stylelint-config-standard "^18.2.0"
@@ -140,11 +140,11 @@
     tslint-config-prettier "^1.10.0"
     tslint-consistent-codestyle "^1.13.0"
 
-"@toba/feed@^1.0.1":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@toba/feed/-/feed-1.0.2.tgz#2b9a47e30974b60fef079fd5107a752211eaf8a2"
+"@toba/feed@^1.2.0":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@toba/feed/-/feed-1.2.3.tgz#f180f7ecd9db1afbeb11f9cd51e3a33d78ffb52f"
   dependencies:
-    "@toba/tools" "^1.20.0"
+    "@toba/tools" "^3.0.0"
 
 "@toba/flickr@^1.3.5":
   version "1.3.8"
@@ -155,9 +155,9 @@
     "@toba/tools" "^1.18.0"
     node-fetch "^2.1.0"
 
-"@toba/json-ld@^1.1.0":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@toba/json-ld/-/json-ld-1.1.1.tgz#12a494b879c588f9a98f7eb504459af062fc42ec"
+"@toba/json-ld@^1.2.0":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@toba/json-ld/-/json-ld-1.2.3.tgz#4d7e14168106345d9e6c8760cfd7d54df2caa964"
 
 "@toba/logger@^1.0.0", "@toba/logger@^1.0.3", "@toba/logger@^1.0.4":
   version "1.0.4"
@@ -168,11 +168,11 @@
     flat "^4.0.0"
     logfmt "^1.2.0"
 
-"@toba/map@^1.0.2", "@toba/map@^1.0.4":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@toba/map/-/map-1.0.11.tgz#55500368d0a5bba6399464058c4d5c2a72700b4f"
+"@toba/map@^1.2.0":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@toba/map/-/map-1.2.2.tgz#b472307b6fcadc8ad58b06f5681d2166b229b8e1"
   dependencies:
-    "@toba/tools" "^1.20.0"
+    "@toba/tools" "^3.0.0"
     "@types/geojson" "^7946.0.2"
     jszip "^3.1.5"
     xmldom "^0.1.27"
@@ -183,38 +183,38 @@
   dependencies:
     oauth "^0.9.15"
 
-"@toba/test@^1.12.0":
-  version "1.12.8"
-  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.12.8.tgz#d7d401ec381af1a9f170866af95bcae3de401308"
+"@toba/test@^1.13.0":
+  version "1.13.5"
+  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.13.5.tgz#24feeb3a3ddcc9e1ba0889577b4137f741f6bf05"
   dependencies:
     "@toba/logger" "^1.0.4"
-    "@toba/tools" "^1.20.0"
+    "@toba/tools" "^3.0.0"
     "@types/jest" "^22.2.0"
-    "@types/node" "^9.6.0"
+    "@types/node" "^10.0.0"
     jest "^22.4.0"
     jest-localstorage-mock "^2.2.0"
     ts-jest "^22.4.0"
 
-"@toba/tools@^1.18.0", "@toba/tools@^1.19.0", "@toba/tools@^1.20.0":
+"@toba/tools@^1.18.0", "@toba/tools@^1.19.0":
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-1.20.0.tgz#77f0c6b6c4443a42f5167ca1ce75426e3bbd7ad9"
   dependencies:
     zlib "^1.0.5"
 
-"@toba/tools@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-2.0.0.tgz#88bc2c1cbcccdf61fdab3559de963c26b80b2eb1"
+"@toba/tools@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@toba/tools/-/tools-3.0.0.tgz#a6665aace9bd9281968368790ce02135f416eb8d"
   dependencies:
     zlib "^1.0.5"
 
-"@trailimage/models@^1.0.0":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.0.5.tgz#f9286fc425f1a500aa0973dcd228d2024640395a"
+"@trailimage/models@^1.1.0":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.1.4.tgz#75709e114969d9b8e5812f0964583ffe59a2fa09"
   dependencies:
-    "@toba/feed" "^1.0.1"
-    "@toba/json-ld" "^1.1.0"
-    "@toba/map" "^1.0.4"
-    "@toba/tools" "^1.18.0"
+    "@toba/feed" "^1.2.0"
+    "@toba/json-ld" "^1.2.0"
+    "@toba/map" "^1.2.0"
+    "@toba/tools" "^3.0.0"
 
 "@types/geojson@^7946.0.2":
   version "7946.0.2"
@@ -224,9 +224,9 @@
   version "22.2.3"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.3.tgz#0157c0316dc3722c43a7b71de3fdf3acbccef10d"
 
-"@types/node@^9.6.0":
-  version "9.6.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.5.tgz#ee700810fdf49ac1c399fc5980b7559b3e5a381d"
+"@types/node@^10.0.0":
+  version "10.0.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.3.tgz#1f89840c7aac2406cc43a2ecad98fc02a8e130e4"
 
 abab@^1.0.4:
   version "1.0.4"
