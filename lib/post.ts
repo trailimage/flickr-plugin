@@ -5,6 +5,7 @@ import {
    Post,
    Photo,
    blog,
+   seriesKeySeparator,
    identifyOutliers,
    config as modelConfig
 } from '@trailimage/models';
@@ -67,7 +68,7 @@ export function loadPost(
       p.subTitle = parts[1];
       p.seriesKey = slug(p.title);
       p.partKey = slug(p.subTitle);
-      p.key = p.seriesKey + '/' + p.partKey;
+      p.key = p.seriesKey + seriesKeySeparator + p.partKey;
    } else {
       p.key = slug(p.originalTitle);
    }
@@ -93,7 +94,15 @@ function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
    p.createdOn = timeStampToDate(setInfo.date_create);
    p.updatedOn = timeStampToDate(setInfo.date_update);
    p.photoCount = setInfo.photos;
-   p.description = setInfo.description._content.replace(/[\r\n\s]*$/, '');
+
+   if (is.empty(p.description)) {
+      // keep existing description if already populated -- this simplifies tests
+      // that get all correct descriptions from single getTree call that would
+      // be replaced by per-post mock call
+      p.description = setInfo.description._content;
+   }
+   p.description = p.description.replace(/[\r\n\s]*$/, '');
+
    // long description is updated after photos are loaded
    p.longDescription = p.description;
    // http://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg

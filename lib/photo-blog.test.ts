@@ -10,13 +10,14 @@ beforeAll(async () => {
    await loadPhotoBlog(blog, false);
    expect(blog.loaded).toBe(true);
    expect(blog.posts.length).toBe(168);
+   console.log = jest.fn();
 });
 
-test('Has root categories', () => {
+test('has root categories', () => {
    expect(blog.categories).toHaveKeys('what', 'when', 'where', 'who');
 });
 
-test('Returns category for key', () => {
+test('returns category for key', () => {
    const what = blog.categoryWithKey('what');
    expect(what).toBeDefined();
    expect(what.title).toBe('What');
@@ -30,7 +31,7 @@ test('Returns category for key', () => {
    expect(bicycle.isParent).toBe(false);
 });
 
-test('Returns keys for category', () => {
+test('returns keys for category', () => {
    const all = blog.categoryKeys();
    const two = blog.categoryKeys('When', 'Bicycle');
 
@@ -41,7 +42,7 @@ test('Returns keys for category', () => {
    expect(two).toContain('what/bicycle');
 });
 
-test('Includes all photo tags with their full names', () => {
+test('includes all photo tags with their full names', () => {
    expect(blog.tags).toHaveKeys(
       'algae',
       'andersonranchreservoir',
@@ -54,11 +55,11 @@ test('Includes all photo tags with their full names', () => {
    );
 });
 
-test('Has post summaries', () => {
+test('has post summaries', () => {
    expect(blog.posts).toHaveLength(168);
 });
 
-test('Finds posts by ID or key', () => {
+test('finds posts by ID or key', () => {
    const post1 = blog.postWithID('72157666685116730');
 
    expect(post1).toBeDefined();
@@ -70,9 +71,12 @@ test('Finds posts by ID or key', () => {
    expect(post2).toBeDefined();
    expect(post2.title).toBe('Owyhee Snow and Sand');
    expect(post2.subTitle).toBe('Lowlands');
+   // expect(post2.description).toBe(
+   //    'I have had my fill of the place but I think Brenna might find Kuna Cave a fun adventure so her and Hunter join me in the little car for the short drive to dusty spelunking while Jessica is busy with meetings.'
+   // );
 });
 
-test('Removes posts', () => {
+test('removes posts', () => {
    let post = blog.postWithKey('owyhee-snow-and-sand/lowlands');
    expect(post).toBeDefined();
    blog.remove(post.key);
@@ -80,13 +84,13 @@ test('Removes posts', () => {
    expect(post).not.toBeDefined();
 });
 
-test('Finds post having a photo', async () => {
+test('finds post having a photo', async () => {
    const post = await blog.postWithPhoto('8459503474');
    expect(post).toBeDefined();
    expect(post).toHaveProperty('id', '72157632729508554');
 });
 
-test('Finds photos with tags', async () => {
+test('finds photos with tags', async () => {
    const photos = await blog.getPhotosWithTags('horse');
    expect(photos).toBeDefined();
    expect(photos).toBeInstanceOf(Array);
@@ -94,19 +98,19 @@ test('Finds photos with tags', async () => {
    expect(photos[0]).toHaveAllProperties('id', 'size');
 });
 
-test('Creates list of post keys', () => {
+test('creates list of post keys', () => {
    const keys = blog.postKeys();
    expect(keys).toHaveLength(167);
    expect(keys).toContain('brother-ride-2015/simmons-creek');
 });
 
-test('Can be emptied', () => {
+test('can be emptied', () => {
    blog.empty();
    expect(blog.loaded).toBe(false);
    expect(blog.posts).toEqual([]);
 });
 
-test('Reloads blog and identifies changed cache keys', async () => {
+test('reloads blog and identifies changed cache keys', async () => {
    const postKeys = [
       'owyhee-snow-and-sand/lowlands',
       'kuna-cave-fails-to-impress'

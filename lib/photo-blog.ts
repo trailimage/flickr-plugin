@@ -1,12 +1,16 @@
-import { Flickr } from '@toba/flickr';
+import { Flickr, FeatureSet } from '@toba/flickr';
 import { log } from '@toba/logger';
 import { is } from '@toba/tools';
-import { PhotoBlog } from '@trailimage/models';
+import { PhotoBlog, Post } from '@trailimage/models';
 import { loadCategory } from './category';
 import { flickr } from './client';
+import { loadPost } from './post';
 
 /**
- * Load blog categories, photo tags and post summaries from Flickr data.
+ * Load blog categories, photo tags and post summaries from Flickr data. Method
+ * must be idempotent so it can be called repeatedly to load new data without
+ * creating duplicates.
+ *
  * @param async Whether to load set information asynchronously
  */
 export async function loadPhotoBlog(
@@ -14,9 +18,15 @@ export async function loadPhotoBlog(
    async = true
 ): Promise<PhotoBlog> {
    // store existing post keys to compute changes
-   const hadPostKeys = photoBlog.postKeys();
+   //const hadPostKeys = photoBlog.postKeys();
    // reset changed keys to none
    photoBlog.changedKeys = [];
+
+   // TODO: create array of old posts then repopulate standard array so they're
+   // in the same order as returned by the API
+   const hadPosts = photoBlog.posts;
+
+   photoBlog.posts = [];
 
    const [collections, tags] = await Promise.all([
       flickr.client.getCollections(),
@@ -25,6 +35,22 @@ export async function loadPhotoBlog(
 
    // parse collections and photo tags
    photoBlog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : null;
+
+   const features: FeatureSet[] = flickr.config.featureSets;
+   if (is.array<FeatureSet>(features)) {
+      // sets to be featured at the collection root can be manually defined in
+      // configuration
+      for (const f of features) {
+         let p: Post = photoBlog.postWithID(f.id);
+
+         if (p === undefined) {
+            p = loadPost(f, false);
+            p.feature = true;
+            photoBlog.addPost(p);
+         }
+      }
+   }
+
    collections.forEach(c => loadCategory(c, true));
    photoBlog.correlatePosts();
    photoBlog.loaded = true;
@@ -72,7 +98,7 @@ export async function loadPhotoBlog(
 }
 
 /**
- * Convert tags to hash of phrases keyed to their "clean" abbreviation
+ * Convert tags to hash of phrases keyed to their "clean" abbreviation.
  */
 function parsePhotoTags(rawTags: Flickr.Tag[]): Map<string, string> {
    const exclusions = is.array(flickr.config.excludeTags)
