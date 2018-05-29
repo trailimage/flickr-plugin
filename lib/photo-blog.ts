@@ -17,15 +17,14 @@ export async function loadPhotoBlog(
    photoBlog: PhotoBlog,
    async = true
 ): Promise<PhotoBlog> {
-   // store existing post keys to compute changes
-   //const hadPostKeys = photoBlog.postKeys();
-   // reset changed keys to none
+   /**
+    * Copy previous posts so their data don't have to be loaded again but reset
+    * correlations in case series or order has changed.
+    */
+   const hadPosts = photoBlog.posts.map(p => p.reset());
+   const hadPostKeys = hadPosts.map(p => p.key);
+
    photoBlog.changedKeys = [];
-
-   // TODO: create array of old posts then repopulate standard array so they're
-   // in the same order as returned by the API
-   const hadPosts = photoBlog.posts;
-
    photoBlog.posts = [];
 
    const [collections, tags] = await Promise.all([
@@ -41,7 +40,7 @@ export async function loadPhotoBlog(
       // sets to be featured at the collection root can be manually defined in
       // configuration
       for (const f of features) {
-         let p: Post = photoBlog.postWithID(f.id);
+         let p: Post = hadPosts.find(p => p.id == f.id);
 
          if (p === undefined) {
             p = loadPost(f, false);
@@ -51,7 +50,7 @@ export async function loadPhotoBlog(
       }
    }
 
-   collections.forEach(c => loadCategory(c, true));
+   collections.forEach(c => loadCategory(c, hadPosts, true));
    photoBlog.correlatePosts();
    photoBlog.loaded = true;
 
