@@ -57,22 +57,8 @@ export function loadPost(
 
    p.id = flickrSet.id;
    p.chronological = chronological;
-   p.originalTitle = flickrSet.title;
 
-   const re = new RegExp(modelConfig.subtitleSeparator + '\\s*', 'g');
-   const parts = p.originalTitle.split(re);
-
-   p.title = parts[0];
-
-   if (parts.length > 1) {
-      p.subTitle = parts[1];
-      p.seriesKey = slug(p.title);
-      p.partKey = slug(p.subTitle);
-      p.key = p.seriesKey + seriesKeySeparator + p.partKey;
-   } else {
-      p.key = slug(p.originalTitle);
-   }
-   return p;
+   return p.inferTitleAndKey(flickrSet.title);
 }
 
 export const loadInfo = (p: Post): Promise<Post> =>

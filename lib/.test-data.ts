@@ -2,6 +2,8 @@ import { config as modelConfig } from '@trailimage/models';
 import { provider } from './provider';
 import { FlickrConfig, Flickr } from '@toba/flickr';
 
+export const postCount = 168;
+
 export const testConfig: FlickrConfig = {
    appID: '72157631007435048',
    userID: '60950751@N04',

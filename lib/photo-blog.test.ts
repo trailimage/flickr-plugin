@@ -1,15 +1,15 @@
 import '@toba/test';
 import { blog } from '@trailimage/models';
 import { flickr } from './client';
-import { testConfig } from './.test-data';
+import { testConfig, postCount } from './.test-data';
 import { loadPhotoBlog } from './photo-blog';
 
 beforeAll(async () => {
    flickr.configure(testConfig);
    expect(blog.loaded).toBe(false);
-   await loadPhotoBlog(blog, false);
+   await loadPhotoBlog(false);
    expect(blog.loaded).toBe(true);
-   expect(blog.posts.length).toBe(168);
+   expect(blog.posts.length).toBe(postCount);
    console.log = jest.fn();
 });
 
@@ -56,7 +56,7 @@ test('includes all photo tags with their full names', () => {
 });
 
 test('has post summaries', () => {
-   expect(blog.posts).toHaveLength(168);
+   expect(blog.posts).toHaveLength(postCount);
 });
 
 test('finds posts by ID or key', () => {
@@ -100,7 +100,7 @@ test('finds photos with tags', async () => {
 
 test('creates list of post keys', () => {
    const keys = blog.postKeys();
-   expect(keys).toHaveLength(167);
+   expect(keys).toHaveLength(postCount);
    expect(keys).toContain('brother-ride-2015/simmons-creek');
 });
 
@@ -115,9 +115,9 @@ test('reloads blog and identifies changed cache keys', async () => {
       'owyhee-snow-and-sand/lowlands',
       'kuna-cave-fails-to-impress'
    ];
-   await loadPhotoBlog(blog, false);
+   await loadPhotoBlog(false);
    blog.remove(...postKeys);
-   await loadPhotoBlog(blog, false);
+   await loadPhotoBlog(false);
 
    const changes = blog.changedKeys;
 

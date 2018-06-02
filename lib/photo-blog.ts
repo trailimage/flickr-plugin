@@ -1,7 +1,7 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
 import { log } from '@toba/logger';
 import { is } from '@toba/tools';
-import { PhotoBlog, Post } from '@trailimage/models';
+import { PhotoBlog, Post, blog } from '@trailimage/models';
 import { loadCategory } from './category';
 import { flickr } from './client';
 import { loadPost } from './post';
@@ -13,87 +13,53 @@ import { loadPost } from './post';
  *
  * @param async Whether to load set information asynchronously
  */
-export async function loadPhotoBlog(
-   photoBlog: PhotoBlog,
-   async = true
-): Promise<PhotoBlog> {
-   /**
-    * Copy previous posts so their data don't have to be loaded again but reset
-    * correlations in case series or order has changed.
-    */
-   const hadPosts = photoBlog.posts.map(p => p.reset());
-   const hadPostKeys = hadPosts.map(p => p.key);
-
-   photoBlog.changedKeys = [];
-   photoBlog.posts = [];
-
+export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
    const [collections, tags] = await Promise.all([
       flickr.client.getCollections(),
       flickr.client.getAllPhotoTags()
    ]);
 
+   blog.beginLoad();
    // parse collections and photo tags
-   photoBlog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : null;
+   blog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : null;
 
    const features: FeatureSet[] = flickr.config.featureSets;
+
    if (is.array<FeatureSet>(features)) {
       // sets to be featured at the collection root can be manually defined in
       // configuration
       for (const f of features) {
-         let p: Post = hadPosts.find(p => p.id == f.id);
+         let p: Post = blog.postWithID(f.id);
 
          if (p === undefined) {
             p = loadPost(f, false);
             p.feature = true;
-            photoBlog.addPost(p);
+            blog.addPost(p);
          }
       }
    }
 
-   collections.forEach(c => loadCategory(c, hadPosts, true));
-   photoBlog.correlatePosts();
-   photoBlog.loaded = true;
+   collections.forEach(c => loadCategory(c, true));
+   blog.finishLoad();
 
    log.info(
       `Loaded ${
-         photoBlog.posts.length
+         blog.posts.length
       } photo posts from Flickr: beginning detail retrieval`
    );
 
    // retrieve additional post info without waiting for it to finish
-   const postInfo = Promise.all(photoBlog.posts.map(p => p.getInfo())).then(
-      () => {
-         photoBlog.postInfoLoaded = true;
-         log.info('Finished loading post details');
-      }
-   );
+   const postInfo = Promise.all(blog.posts.map(p => p.getInfo())).then(() => {
+      blog.postInfoLoaded = true;
+      log.info('Finished loading post details');
+   });
 
    if (!async) {
       // if async is disabled then wait for post information to load
       await postInfo;
    }
 
-   // find changed post and category keys so their caches can be invalidated
-   if (hadPostKeys.length > 0) {
-      let changedKeys: string[] = [];
-      photoBlog.posts
-         .filter(p => hadPostKeys.indexOf(p.key) == -1)
-         .forEach(p => {
-            log.info('Found new post "%s"', p.title);
-            // all post categories will need to be refreshed
-            changedKeys = changedKeys.concat(Array.from(p.categories.keys()));
-            // update adjecent posts to correct next/previous links
-            if (is.value(p.next)) {
-               changedKeys.push(p.next.key);
-            }
-            if (is.value(p.previous)) {
-               changedKeys.push(p.previous.key);
-            }
-         });
-      photoBlog.changedKeys = changedKeys;
-   }
-
-   return photoBlog;
+   return blog;
 }
 
 /**
