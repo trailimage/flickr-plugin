@@ -13,25 +13,25 @@ beforeAll(async () => {
    expect(res).toBeDefined();
 });
 
-test('Finds photos with tags', async () => {
+test('finds photos with tags', async () => {
    const photos: Photo[] = await photosWithTags('tag1', 'tag2');
    expect(photos).toBeInstanceOf(Array);
    expect(photos[0].id).toBe('21365383716');
 });
 
-test('Converts Flickr date string to Date', () => {
+test('converts Flickr date string to Date', () => {
    const d = parseDate('2012-06-17 17:34:33');
    expect(d).toBeInstanceOf(Date);
    expect(d.getDate()).toBe(17);
    expect(d.getMonth()).toBe(5);
 });
 
-test.skip('Adjusts Flickr date to local timezone', () => {
+test.skip('adjusts Flickr date to local timezone', () => {
    const d = parseDate('2012-06-17 17:34:33');
    expect(d.getHours()).toBe(17);
 });
 
-test('Loads photo from Flickr data', () => {
+test('loads photo from Flickr data', () => {
    const photo = loadPhoto(res.photo[0], 0);
    expect(photo).toBeDefined();
    expect(photo.id).toBe('8459503474');

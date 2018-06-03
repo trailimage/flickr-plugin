@@ -32,6 +32,9 @@ export function parseDate(text: string): Date {
 export const photosWithTags = (...tags: string[]) =>
    flickr.client.photoSearch(tags).then(photos => photos.map(loadPhoto));
 
+/**
+ * Create photo instance from Flickr photo summary.
+ */
 export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    const photo = new Photo(summary.id, index);
 
