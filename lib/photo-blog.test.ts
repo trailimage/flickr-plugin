@@ -76,6 +76,12 @@ test('finds posts by ID or key', () => {
    // );
 });
 
+test('creates list of post keys', () => {
+   const keys = blog.postKeys();
+   expect(keys).toHaveLength(postCount);
+   expect(keys).toContain('brother-ride-2015/simmons-creek');
+});
+
 test('removes posts', () => {
    let post = blog.postWithKey('owyhee-snow-and-sand/lowlands');
    expect(post).toBeDefined();
@@ -98,12 +104,6 @@ test('finds photos with tags', async () => {
    expect(photos[0]).toHaveAllProperties('id', 'size');
 });
 
-test('creates list of post keys', () => {
-   const keys = blog.postKeys();
-   expect(keys).toHaveLength(postCount);
-   expect(keys).toContain('brother-ride-2015/simmons-creek');
-});
-
 test('can be emptied', () => {
    blog.empty();
    expect(blog.loaded).toBe(false);
@@ -123,7 +123,8 @@ test('reloads blog and identifies changed cache keys', async () => {
 
    // changes should include the posts and their categories
    expect(changes).toBeInstanceOf(Array);
-   expect(changes).toContain(postKeys[0]);
+   // post was first in series so key is series slug only
+   expect(changes).toContain('owyhee-snow-and-sand');
    expect(changes).toContain(postKeys[1]);
    expect(changes).toContain('who/solo');
    expect(changes).toContain('where/owyhees');

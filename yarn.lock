@@ -115,9 +115,9 @@
   dependencies:
     zlib "^1.0.5"
 
-"@trailimage/models@^1.1.0":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.4.2.tgz#cee2f3b2abaecc62831fece0e19508859ee1f7eb"
+"@trailimage/models@^1.4.0":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.4.3.tgz#74eab5d65852562cb4089654a586f8f2b4490332"
   dependencies:
     "@toba/feed" "^1.2.0"
     "@toba/json-ld" "^1.2.0"
@@ -1439,7 +1439,7 @@ fsevents@^1.0.0, fsevents@^1.2.3:
     nan "^2.9.2"
     node-pre-gyp "^0.10.0"
 
-function-bind@^1.0.2, function-bind@^1.1.1:
+function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
 
@@ -1631,10 +1631,10 @@ has-values@^1.0.0:
     kind-of "^4.0.0"
 
 has@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/has/-/has-1.0.1.tgz#8461733f538b0837c9361e39a9ab9e9704dc2f28"
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/has/-/has-1.0.2.tgz#1a64bfe4b52e67fb87b9822503d97c019fb6ba42"
   dependencies:
-    function-bind "^1.0.2"
+    function-bind "^1.1.1"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -3418,7 +3418,7 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@^1.12.0:
+prettier@^1.13.0:
   version "1.13.4"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.4.tgz#31bbae6990f13b1093187c731766a14036fa72e6"
 
@@ -4345,7 +4345,7 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typescript@^2.8.0:
+typescript@^2.9.0:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
