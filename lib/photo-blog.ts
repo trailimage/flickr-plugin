@@ -22,7 +22,10 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
    blog.beginLoad();
    // parse collections and photo tags
    blog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : null;
+   collections.forEach(c => loadCategory(c, true));
 
+   // posts are sorted newest first so add featured, non-chronological sets at
+   // the end
    const features: FeatureSet[] = flickr.config.featureSets;
 
    if (is.array<FeatureSet>(features)) {
@@ -39,7 +42,6 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
       }
    }
 
-   collections.forEach(c => loadCategory(c, true));
    blog.finishLoad();
 
    log.info(

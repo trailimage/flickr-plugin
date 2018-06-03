@@ -1,8 +1,11 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "2.1.1",
+   "version": "2.1.2",
    "description": "Trail Image Flickr provider",
    "private": false,
+   "engines": {
+      "node": ">=10.0.0"
+   },
    "author": {
       "name": "Jason Abbott",
       "url": "http://github.com/trailimage"
