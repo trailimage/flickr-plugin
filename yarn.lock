@@ -116,8 +116,8 @@
     zlib "^1.0.5"
 
 "@trailimage/models@^1.4.0":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.4.3.tgz#74eab5d65852562cb4089654a586f8f2b4490332"
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-1.4.5.tgz#8cbc9ff2cf26c434ceaad48c34fcc9e4c846ac45"
   dependencies:
     "@toba/feed" "^1.2.0"
     "@toba/json-ld" "^1.2.0"

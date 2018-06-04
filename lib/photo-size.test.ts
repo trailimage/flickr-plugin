@@ -1,5 +1,5 @@
-import { Flickr } from '@toba/flickr';
 import '@toba/test';
+import { Flickr } from '@toba/flickr';
 import { flickr } from './client';
 import { testConfig } from './.test-data';
 import { loadPhotoSize } from './photo-size';
@@ -12,7 +12,7 @@ beforeAll(async () => {
    expect(res).toBeDefined();
 });
 
-test('Selects photo size', async () => {
+test('selects photo size', async () => {
    const size = loadPhotoSize(res.photo[0], Flickr.SizeCode.Large1024);
    expect(size).toBeDefined();
    expect(size.url).toBe(
@@ -22,7 +22,7 @@ test('Selects photo size', async () => {
    expect(size.height).toBe(688);
 });
 
-test('Only selects available photo size', () => {
+test('only selects available photo size', () => {
    const size = loadPhotoSize(
       res.photo[1],
       Flickr.SizeCode.Original,
@@ -33,7 +33,7 @@ test('Only selects available photo size', () => {
    );
 });
 
-test('Returns null if no photo sizes match preference', () => {
+test('returns null if no photo sizes match preference', () => {
    const size = loadPhotoSize(res.photo[1], Flickr.SizeCode.Original);
    expect(size).toBeNull();
 });

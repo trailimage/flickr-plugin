@@ -1,7 +1,7 @@
 import { Flickr } from '@toba/flickr';
 import { inDaylightSavings, is } from '@toba/tools';
 import { Photo } from '@trailimage/models';
-//import { loadPhotoSize } from './photo-size';
+import { loadPhotoSize } from './photo-size';
 import { flickr } from './client';
 
 /**
@@ -58,13 +58,14 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
       : null;
    photo.primary = summary.isprimary == 1;
 
+   // outlier status is calculated later
    photo.outlierDate = false;
 
-   // photo.size = {
-   //    preview: loadPhotoSize(json, config.style.photoSizes.preview),
-   //    normal: loadPhotoSize(json, config.style.photoSizes.normal),
-   //    big: loadPhotoSize(json, config.style.photoSizes.big)
-   // };
+   photo.size = {
+      preview: loadPhotoSize(summary, config.photoSizes.preview),
+      normal: loadPhotoSize(summary, config.style.photoSizes.normal),
+      big: loadPhotoSize(summary, config.style.photoSizes.big)
+   };
 
    return photo;
 }
