@@ -1,11 +1,9 @@
 import '@toba/test';
 import { blog } from '@trailimage/models';
-import { flickr } from './client';
-import { testConfig, postCount } from './.test-data';
+import { postCount } from './.test-data';
 import { loadPhotoBlog } from './photo-blog';
 
 beforeAll(async () => {
-   flickr.configure(testConfig);
    expect(blog.loaded).toBe(false);
    await loadPhotoBlog(false);
    expect(blog.loaded).toBe(true);

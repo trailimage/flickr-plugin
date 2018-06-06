@@ -1,13 +1,12 @@
-import { Flickr } from '@toba/flickr';
 import '@toba/test';
+import { Flickr } from '@toba/flickr';
 import { loadCategory } from './category';
 import { flickr } from './client';
-import { testConfig } from './.test-data';
+import './.test-data';
 
 let res: Flickr.Collection[];
 
 beforeAll(async () => {
-   flickr.configure(testConfig);
    res = await flickr.client.getCollections();
    expect(res).toBeDefined();
 });

@@ -1,13 +1,11 @@
 import { Flickr, FeatureSet } from '@toba/flickr';
-import { slug, is, parseNumber } from '@toba/tools';
+import { is, parseNumber } from '@toba/tools';
 import { log } from '@toba/logger';
 import {
    Post,
    Photo,
    blog,
-   seriesKeySeparator,
-   identifyOutliers,
-   config as modelConfig
+   identifyOutliers
 } from '@trailimage/models';
 import { flickr } from './client';
 import { loadVideoInfo } from './video-info';

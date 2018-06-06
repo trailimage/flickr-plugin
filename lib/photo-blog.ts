@@ -5,13 +5,15 @@ import { PhotoBlog, Post, blog } from '@trailimage/models';
 import { loadCategory } from './category';
 import { flickr } from './client';
 import { loadPost } from './post';
+import { config } from '../';
 
 /**
  * Load blog categories, photo tags and post summaries from Flickr data. Method
  * must be idempotent so it can be called repeatedly to load new data without
  * creating duplicates.
  *
- * @param async Whether to load set information asynchronously
+ * @param async Whether to return blog instance without waiting for post
+ * details to load
  */
 export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
    const [collections, tags] = await Promise.all([
@@ -26,7 +28,7 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
 
    // posts are sorted newest first so add featured, non-chronological sets at
    // the end
-   const features: FeatureSet[] = flickr.config.featureSets;
+   const features: FeatureSet[] = config.featureSets;
 
    if (is.array<FeatureSet>(features)) {
       // sets to be featured at the collection root can be manually defined in

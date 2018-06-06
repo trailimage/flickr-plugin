@@ -1,28 +1,21 @@
+import { is } from '@toba/tools';
 import { FlickrClient, FlickrConfig } from '@toba/flickr';
+import { config } from '../';
 
 let _client: FlickrClient = null;
-let _config: FlickrConfig = null;
-
-export function configure(config: FlickrConfig) {
-   _config = config;
-}
 
 export const flickr = {
    get client() {
       if (_client == null) {
-         if (_config === null) {
+         if (!is.value(config.api)) {
             throw new Error('Invalid Flickr client configuration');
          }
-         _client = new FlickrClient(_config);
+         _client = new FlickrClient(config.api);
       }
       return _client;
    },
 
-   get config() {
-      return _config;
-   },
-
-   configure(config: FlickrConfig) {
-      _config = config;
+   get config(): FlickrConfig {
+      return config.api;
    }
 };

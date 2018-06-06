@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "2.1.2",
+   "version": "2.2.0",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
@@ -19,6 +19,7 @@
       "index.ts",
       "lib/category.ts",
       "lib/client.ts",
+      "lib/config.ts",
       "lib/exif.ts",
       "lib/photo-blog.ts",
       "lib/photo-size.ts",
@@ -48,7 +49,7 @@
       "tabWidth": 3
    },
    "dependencies": {
-      "@toba/flickr": "^1.3.5",
+      "@toba/flickr": "^1.4.0",
       "@toba/logger": "^1.0.3",
       "@toba/map": "^1.2.0",
       "@toba/tools": "^3.1.0",

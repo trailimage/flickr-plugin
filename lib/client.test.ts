@@ -1,13 +1,10 @@
-import { FlickrClient } from '@toba/flickr';
 import '@toba/test';
+import { FlickrClient } from '@toba/flickr';
 import { flickr } from './client';
-import { testConfig } from './.test-data';
 
 test('Throws exception for invalid configuration', () => {
    let e: Error;
    let c: FlickrClient;
-
-   flickr.configure(null);
 
    try {
       c = flickr.client;
@@ -19,11 +16,11 @@ test('Throws exception for invalid configuration', () => {
    expect(e.message).toBe('Invalid Flickr client configuration');
 });
 
-test('Allows configuration', () => {
+test('Allows configuration', async () => {
    let e: Error;
    let c: FlickrClient;
 
-   flickr.configure(testConfig);
+   await import('./.test-data');
 
    try {
       c = flickr.client;

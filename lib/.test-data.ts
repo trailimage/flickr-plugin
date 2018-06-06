@@ -1,10 +1,14 @@
 import { config as modelConfig } from '@trailimage/models';
 import { provider } from './provider';
-import { FlickrConfig, Flickr } from '@toba/flickr';
+import { config } from '../';
+import { Flickr } from '@toba/flickr';
 
 export const postCount = 168;
 
-export const testConfig: FlickrConfig = {
+console.debug = jest.fn();
+
+config.featureSets = [{ id: '72157632729508554', title: 'Ruminations' }];
+config.api = {
    appID: '72157631007435048',
    userID: '60950751@N04',
    excludeSets: ['72157631638576162'],
@@ -16,7 +20,6 @@ export const testConfig: FlickrConfig = {
       'Boise'
    ],
    timeZoneOffset: -1,
-   featureSets: [{ id: '72157632729508554', title: 'Ruminations' }],
    setPhotoSizes: [Flickr.SizeCode.Large1024],
    useCache: false,
    maxRetries: 1,

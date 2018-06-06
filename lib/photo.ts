@@ -3,6 +3,7 @@ import { inDaylightSavings, is } from '@toba/tools';
 import { Photo } from '@trailimage/models';
 import { loadPhotoSize } from './photo-size';
 import { flickr } from './client';
+import { config } from '../';
 
 /**
  * Convert text to date object. Date constructor uses local time which we
@@ -62,9 +63,9 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    photo.outlierDate = false;
 
    photo.size = {
-      preview: loadPhotoSize(summary, config.photoSizes.preview),
-      normal: loadPhotoSize(summary, config.style.photoSizes.normal),
-      big: loadPhotoSize(summary, config.style.photoSizes.big)
+      preview: loadPhotoSize(summary, ...config.photoSizes.preview),
+      normal: loadPhotoSize(summary, ...config.photoSizes.normal),
+      big: loadPhotoSize(summary, ...config.photoSizes.big)
    };
 
    return photo;

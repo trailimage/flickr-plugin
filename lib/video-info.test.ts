@@ -1,13 +1,12 @@
-import { Flickr } from '@toba/flickr';
 import '@toba/test';
+import './.test-data';
+import { Flickr } from '@toba/flickr';
 import { flickr } from './client';
-import { testConfig } from './.test-data';
 import { loadVideoInfo } from './video-info';
 
 let res: Flickr.SetInfo;
 
 beforeAll(async () => {
-   flickr.configure(testConfig);
    res = await flickr.client.getSetInfo('id');
    expect(res).toBeDefined();
 });
