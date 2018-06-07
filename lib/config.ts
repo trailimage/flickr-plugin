@@ -8,7 +8,10 @@ export interface FeatureSet {
 export interface ProviderConfig {
    /** Flickr size codes in order of preference. */
    photoSizes: {
-      /** Size at which to preview the photo such as in search results. */
+      [key: string]: Flickr.SizeCode[];
+      /** Thumbnail size shown on search summary. */
+      thumb: Flickr.SizeCode[];
+      /** Size at which to preview the photo such as on the map. */
       preview: Flickr.SizeCode[];
       /** Normal photo size shown within post. */
       normal: Flickr.SizeCode[];
@@ -23,6 +26,7 @@ export interface ProviderConfig {
 
 export const config: ProviderConfig = {
    photoSizes: {
+      thumb: [Flickr.SizeCode.Square150],
       preview: [Flickr.SizeCode.Large1024],
       normal: [Flickr.SizeCode.Large1024],
       big: [Flickr.SizeCode.Large1024]
