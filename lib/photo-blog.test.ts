@@ -102,6 +102,12 @@ test('finds photos with tags', async () => {
    expect(photos[0]).toHaveAllProperties('id', 'size');
 });
 
+test('correlates posts in series', async () => {
+   const post = await blog.postWithKey('brother-ride-2015/huckleberry-lookout');
+   expect(post).toBeDefined();
+   expect(post).toHaveProperty('isPartial', true);
+});
+
 test('can be emptied', () => {
    blog.empty();
    expect(blog.loaded).toBe(false);

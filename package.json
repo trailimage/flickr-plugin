@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "2.2.1",
+   "version": "2.2.2",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
@@ -53,6 +53,6 @@
       "@toba/logger": "^1.0.3",
       "@toba/map": "^1.2.0",
       "@toba/tools": "^3.1.0",
-      "@trailimage/models": "^1.4.0"
+      "@trailimage/models": "^1.4.6"
    }
 }

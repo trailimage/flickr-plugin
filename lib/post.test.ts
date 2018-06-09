@@ -17,17 +17,17 @@ beforeAll(async () => {
    expect(res).toBeDefined();
 });
 
-test('Finds post containing photo', async () => {
+test('finds post containing photo', async () => {
    const postID: string = await postIdWithPhotoId('photo-id');
    expect(postID).toBe('72157632729508554');
 });
 
-test('Creates date from timestamp', () => {
+test('creates date from timestamp', () => {
    const d = timeStampToDate('55432222');
    expect(d).toBeInstanceOf(Date);
 });
 
-test('Loads post from Flickr data', () => {
+test('loads post from Flickr data', () => {
    const post = loadPost(res[0].collection[0].set[0]);
    expect(post).toBeDefined();
    expect(post.id).toBe('72157666725213214');
@@ -36,7 +36,7 @@ test('Loads post from Flickr data', () => {
    expect(post.photosLoaded).toBe(false);
 });
 
-test('Loads post info from Flickr data', async () => {
+test('loads post info from Flickr data', async () => {
    const post = loadPost(res[0].collection[0].set[0]);
 
    await loadInfo(post);
@@ -45,7 +45,7 @@ test('Loads post info from Flickr data', async () => {
    expect(post.photosLoaded).toBe(false);
 });
 
-test('Loads photo info from Flickr data', async () => {
+test('loads photo info from Flickr data', async () => {
    const post = loadPost(res[0].collection[0].set[0]);
 
    await loadPhotos(post);
