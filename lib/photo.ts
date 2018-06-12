@@ -3,7 +3,7 @@ import { inDaylightSavings, is } from '@toba/tools';
 import { Photo } from '@trailimage/models';
 import { loadPhotoSize } from './photo-size';
 import { flickr } from './client';
-import { config } from '../';
+import { config } from './index';
 
 /**
  * Convert text to date object. Date constructor uses local time which we

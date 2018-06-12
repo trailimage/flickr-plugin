@@ -1,6 +1,6 @@
 import { is } from '@toba/tools';
 import { FlickrClient, FlickrConfig } from '@toba/flickr';
-import { config } from '../';
+import { config } from './index';
 
 let _client: FlickrClient = null;
 

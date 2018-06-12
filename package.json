@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "2.2.2",
+   "version": "2.2.3",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
@@ -14,21 +14,13 @@
    "publishConfig": {
       "access": "public"
    },
-   "main": "index.ts",
+   "main": "dist/index.js",
+   "types:": "dist/index.d.ts",
    "files": [
-      "index.ts",
-      "lib/category.ts",
-      "lib/client.ts",
-      "lib/config.ts",
-      "lib/exif.ts",
-      "lib/photo-blog.ts",
-      "lib/photo-size.ts",
-      "lib/photo.ts",
-      "lib/post.ts",
-      "lib/provider.ts",
-      "lib/video-info.ts"
+      "dist/**/*"
    ],
    "scripts": {
+      "prepublishOnly": "./node_modules/.bin/tsc",
       "test": "jest --coverage"
    },
    "devDependencies": {

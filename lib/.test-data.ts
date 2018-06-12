@@ -1,6 +1,6 @@
 import { config as modelConfig } from '@trailimage/models';
 import { provider } from './provider';
-import { config } from '../';
+import { config } from './';
 import { Flickr } from '@toba/flickr';
 
 export const postCount = 168;
