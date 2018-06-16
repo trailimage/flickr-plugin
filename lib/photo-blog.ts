@@ -5,7 +5,8 @@ import { PhotoBlog, Post, blog } from '@trailimage/models';
 import { loadCategory } from './category';
 import { flickr } from './client';
 import { loadPost } from './post';
-import { config, FeatureSet } from './index';
+import { provider } from './provider';
+import { FeatureSet } from './index';
 
 /**
  * Load blog categories, photo tags and post summaries from Flickr data. Method
@@ -28,7 +29,7 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
 
    // posts are sorted newest first so add featured, non-chronological sets at
    // the end
-   const features: FeatureSet[] = config.featureSets;
+   const features: FeatureSet[] = provider.config.featureSets;
 
    if (is.array<FeatureSet>(features)) {
       // sets to be featured at the collection root can be manually defined in

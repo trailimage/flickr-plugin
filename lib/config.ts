@@ -23,13 +23,3 @@ export interface ProviderConfig {
    /** Optional set IDs to feature. */
    featureSets?: FeatureSet[];
 }
-
-export const config: ProviderConfig = {
-   photoSizes: {
-      thumb: [Flickr.SizeCode.Square150],
-      preview: [Flickr.SizeCode.Large1024],
-      normal: [Flickr.SizeCode.Large1024],
-      big: [Flickr.SizeCode.Large1024]
-   },
-   api: null
-};

@@ -119,8 +119,8 @@
     zlib "^1.0.5"
 
 "@trailimage/models@^2.0.0-beta.1":
-  version "2.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-2.0.0-beta.1.tgz#e15ac73ca16677e198f6d6097fc90c7da2293c81"
+  version "2.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-2.0.0-beta.4.tgz#25da0c222f32f1cd486a97dba24b8d8950ad2282"
   dependencies:
     "@toba/feed" "^1.3.0"
     "@toba/json-ld" "^1.2.0"
@@ -3731,8 +3731,8 @@ resolve@1.1.7:
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
 resolve@^1.1.7, resolve@^1.3.2:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.7.1.tgz#aadd656374fd298aee895bc026b8297418677fd3"
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.8.0.tgz#a7f2ac27b78480ecc09c83782741d9f26e4f0c3e"
   dependencies:
     path-parse "^1.0.5"
 
@@ -4090,8 +4090,8 @@ stylelint-config-standard@^18.2.0:
     stylelint-config-recommended "^2.1.0"
 
 stylelint-scss@^3.1.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.1.1.tgz#caa79b8956e3ac6765ecb676a441e4ca1bb0e427"
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.1.2.tgz#3257c0600d197fe7642f3698944b47c91567f379"
   dependencies:
     lodash "^4.17.10"
     postcss-media-query-parser "^0.2.3"
