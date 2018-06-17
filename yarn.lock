@@ -62,12 +62,12 @@
     "@toba/tools" "^3.1.0"
 
 "@toba/flickr@^1.4.0":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@toba/flickr/-/flickr-1.4.2.tgz#fbe7dd0115406d951a61af9c69f34c2b109b363c"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@toba/flickr/-/flickr-1.5.1.tgz#d5cbbde288bfc3a0fa6939a06f29fb8fb18d3efe"
   dependencies:
     "@toba/logger" "^1.0.0"
     "@toba/oauth" "^1.2.0"
-    "@toba/tools" "^3.1.0"
+    "@toba/tools" "^3.2.0"
     node-fetch "^2.1.0"
 
 "@toba/json-ld@^1.2.0":
@@ -95,18 +95,19 @@
     xmldom "^0.1.27"
 
 "@toba/oauth@^1.2.0":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@toba/oauth/-/oauth-1.2.4.tgz#aca999538c7528178b20606e2f5ffd9744364db2"
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/@toba/oauth/-/oauth-1.2.8.tgz#62effe66218160f6bbde03df736c236b5613f7b6"
   dependencies:
+    "@types/oauth" "^0.9.0"
     oauth "^0.9.15"
 
 "@toba/test@^1.13.0":
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.17.1.tgz#50a419486e4e54f596e6969812b0906ca899d9cb"
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@toba/test/-/test-1.19.0.tgz#65e62810bf784000a54684cda52879442d360e4e"
   dependencies:
     "@toba/logger" "^1.0.4"
     "@toba/tools" "^3.2.0"
-    "@types/jest" "^23.0.0"
+    "@types/jest" "^23.1.0"
     "@types/node" "^10.3.0"
     jest "^23.1.0"
     jest-localstorage-mock "^2.2.0"
@@ -119,8 +120,8 @@
     zlib "^1.0.5"
 
 "@trailimage/models@^2.0.0-beta.1":
-  version "2.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-2.0.0-beta.4.tgz#25da0c222f32f1cd486a97dba24b8d8950ad2282"
+  version "2.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@trailimage/models/-/models-2.0.0-beta.5.tgz#ef86922222b9802df3d8a34924b824bc8d571b7c"
   dependencies:
     "@toba/feed" "^1.3.0"
     "@toba/json-ld" "^1.2.0"
@@ -132,13 +133,19 @@
   version "7946.0.3"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-7946.0.3.tgz#e5791534ab0acfb2b3a39b713966cfcee85d469f"
 
-"@types/jest@^23.0.0":
+"@types/jest@^23.1.0":
   version "23.1.0"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.1.0.tgz#8054dd838ba23dc331794d26456b86c7e50bf0f6"
 
-"@types/node@^10.3.0":
+"@types/node@*", "@types/node@^10.3.0":
   version "10.3.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.3.tgz#8798d9e39af2fa604f715ee6a6b19796528e46c3"
+
+"@types/oauth@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@types/oauth/-/oauth-0.9.0.tgz#d6af31f8aa92a964ba061f189880197b456c6667"
+  dependencies:
+    "@types/node" "*"
 
 abab@^1.0.4:
   version "1.0.4"
@@ -4090,8 +4097,8 @@ stylelint-config-standard@^18.2.0:
     stylelint-config-recommended "^2.1.0"
 
 stylelint-scss@^3.1.0:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.1.2.tgz#3257c0600d197fe7642f3698944b47c91567f379"
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.1.3.tgz#28f881ae298c3f5db667b10b6cf94a1a219001d6"
   dependencies:
     lodash "^4.17.10"
     postcss-media-query-parser "^0.2.3"
