@@ -46,6 +46,21 @@ class FlickrProvider extends PostProvider<ProviderConfig> {
       const verifier = unlist(url.query['oauth_verifier'], true);
       return flickr.client.getAccessToken(requestToken, verifier);
    }
+
+   /**
+    * Merge configuration as normal then copy sizes to API configuration.
+    */
+   configure(newConfig: Partial<ProviderConfig>): void {
+      super.configure(newConfig);
+      const sizes = this.config.photoSizes;
+
+      this.config.api.setPhotoSizes = [
+         ...sizes.big,
+         ...sizes.normal,
+         ...sizes.preview,
+         ...sizes.thumb
+      ];
+   }
 }
 
 export const provider = new FlickrProvider({
