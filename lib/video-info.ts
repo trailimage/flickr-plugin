@@ -6,7 +6,7 @@ import { VideoInfo } from '@trailimage/models';
  * @example
  *    Video (960x720): <a href="http://youtu.be/obCgu3yJ4uw" rel="nofollow">youtu.be/obCgu3yJ4uw</a>
  */
-const re = /Video(\s*\((\d+)[x×](\d+)\))?:\s*<a[^>]+>[^\/]+\/([\w\-_]+)<\/a>/gi;
+const re = /Video(\s*\((\d+)[x×](\d+)\))?:\s*<a[^>]+>[^\/]+\/([\w\-_]+)<\/a>/i;
 
 /**
  * Get video ID and dimensions from Flickr set description.
@@ -15,7 +15,6 @@ export function loadVideoInfo(setInfo: Flickr.SetInfo): VideoInfo {
    const d = setInfo.description._content;
 
    if (re.test(d)) {
-      re.lastIndex = 0;
       const match = re.exec(d);
       // remove video link and any trailing space from description
       setInfo.description._content = d

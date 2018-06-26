@@ -24,14 +24,23 @@ test('Removes video information from description', () => {
       'On the third and fourth days of our annual Brother Ride, we leave the beautiful campsite along the shore of high mountain Big Trinity Lake with plans to descend to historic Atlanta, Idaho, then venture on trails unknown to camp along the North Fork of the Boise River before returning home.'
    );
 
-   const text =
+   let text =
       'Boulder Basin came to mind when the need for a getaway arose. It’s about as far removed from civilization as you can get in an automobile around here, enough of a trip that you’d best plan on spending the night.';
-   const res2: Partial<Flickr.SetInfo> = {
+   let info: Partial<Flickr.SetInfo> = {
       description: {
          _content: `${text}\n \nVideo (1024x576): <a href="http://youtu.be/8mieqdlWR0E" rel="nofollow">youtu.be/8mieqdlWR0E</a>`
       }
    };
 
-   loadVideoInfo(res2);
-   expect(res2.description._content).toBe(text);
+   text = `Jess and I narrowly avoid fire closures as we make our way north of Ketchum to spend the night high within historic Boulder Basin. The last five miles are quite challenging. They take longer than the first 200. It’s evening when finally we make it to the breathtaking basin.`;
+   info = {
+      description: {
+         _content: `${text}
+
+Video (853x480): <a href="http://youtu.be/30l2KuTewKk" rel="nofollow">youtu.be/30l2KuTewKk</a>`
+      }
+   };
+
+   loadVideoInfo(info);
+   expect(info.description._content).toBe(text);
 });

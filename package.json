@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "2.3.2",
+   "version": "2.3.3",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
