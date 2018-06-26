@@ -65,6 +65,7 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
    const sizes = provider.config.photoSizes;
 
    photo.size = {
+      thumb: loadPhotoSize(summary, ...sizes.thumb),
       preview: loadPhotoSize(summary, ...sizes.preview),
       normal: loadPhotoSize(summary, ...sizes.normal),
       big: loadPhotoSize(summary, ...sizes.big)
