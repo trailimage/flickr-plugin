@@ -17,10 +17,18 @@ import { FeatureSet } from './index';
  * details to load
  */
 export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
-   const [collections, tags] = await Promise.all([
-      flickr.client.getCollections(),
-      flickr.client.getAllPhotoTags()
-   ]);
+   let collections: Flickr.Collection[] = [];
+   let tags: Flickr.Tag[] = [];
+
+   try {
+      [collections, tags] = await Promise.all([
+         flickr.client.getCollections(),
+         flickr.client.getAllPhotoTags()
+      ]);
+   } catch (err) {
+      log.error(err);
+      return null;
+   }
 
    blog.beginLoad();
    // parse collections and photo tags
