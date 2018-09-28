@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "2.3.5",
+   "version": "2.3.6",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
@@ -27,7 +27,8 @@
       "@toba/build": "^1.7.0",
       "@toba/test": "^1.20.0",
       "prettier": "^1.14.0",
-      "typescript": "^3.0.0"
+      "typescript": "^3.0.0",
+      "@types/node-fetch": "^2.1.2"
    },
    "repository": {
       "type": "git",

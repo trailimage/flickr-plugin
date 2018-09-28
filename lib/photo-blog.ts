@@ -27,7 +27,8 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
       ]);
    } catch (err) {
       log.error(err);
-      return null;
+      blog.loaded = false;
+      return blog;
    }
 
    blog.beginLoad();

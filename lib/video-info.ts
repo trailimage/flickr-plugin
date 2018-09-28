@@ -11,7 +11,7 @@ const re = /Video(\s*\((\d+)[x×](\d+)\))?:\s*<a[^>]+>[^\/]+\/([\w\-_]+)<\/a>/i;
 /**
  * Get video ID and dimensions from Flickr set description.
  */
-export function loadVideoInfo(setInfo: Flickr.SetInfo): VideoInfo {
+export function loadVideoInfo(setInfo: Partial<Flickr.SetInfo>): VideoInfo {
    const d = setInfo.description._content;
 
    if (re.test(d)) {
