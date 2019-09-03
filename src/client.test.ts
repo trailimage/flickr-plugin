@@ -3,8 +3,8 @@ import { FlickrClient } from '@toba/flickr';
 import { flickr } from './client';
 
 test('Throws exception for invalid configuration', () => {
-   let e: Error;
-   let c: FlickrClient;
+   let e: Error | undefined = undefined;
+   let c: FlickrClient | undefined = undefined;
 
    try {
       c = flickr.client;
@@ -13,13 +13,12 @@ test('Throws exception for invalid configuration', () => {
    }
    expect(c).toBeUndefined();
    expect(e).toBeDefined();
-   expect(e.message).toBe('Invalid Flickr client configuration');
+   expect(e!.message).toBe('Invalid Flickr client configuration');
 });
 
 test('Allows configuration', async () => {
-   let e: Error;
-   let c: FlickrClient;
-
+   let e: Error | undefined = undefined;
+   let c: FlickrClient | undefined = undefined;
    await import('./.test-data');
 
    try {

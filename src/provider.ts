@@ -12,36 +12,16 @@ import { loadEXIF } from './exif';
 import { flickr } from './client';
 
 class FlickrProvider extends PostProvider<ProviderConfig> {
-   photoBlog(async = true) {
-      return loadPhotoBlog(async);
-   }
-
-   exif(photoID: string) {
-      return loadEXIF(photoID);
-   }
-
-   postIdWithPhotoId(photoID: string) {
-      return postIdWithPhotoId(photoID);
-   }
-
-   photosWithTags(...tags: string[]) {
-      return photosWithTags(...tags);
-   }
-
-   postInfo(p: Post) {
-      return loadInfo(p);
-   }
-
-   postPhotos(p: Post) {
-      return loadPhotos(p);
-   }
-
-   authorizationURL() {
-      return flickr.client.getRequestToken();
-   }
+   photoBlog = (async = true) => loadPhotoBlog(async);
+   exif = (photoID: string) => loadEXIF(photoID);
+   postIdWithPhotoId = (photoID: string) => postIdWithPhotoId(photoID);
+   photosWithTags = (...tags: string[]) => photosWithTags(...tags);
+   postInfo = (p: Post) => loadInfo(p);
+   postPhotos = (p: Post) => loadPhotos(p);
+   authorizationURL = () => flickr.client.getRequestToken();
 
    getAccessToken(req: IncomingMessage): Promise<Token> {
-      const url = parse(req.url, true);
+      const url = parse(req.url!, true);
       const requestToken = unlist(url.query['oauth_token'], true);
       const verifier = unlist(url.query['oauth_verifier'], true);
       return flickr.client.getAccessToken(requestToken, verifier);
@@ -53,6 +33,10 @@ class FlickrProvider extends PostProvider<ProviderConfig> {
    configure(newConfig: Partial<ProviderConfig>): void {
       super.configure(newConfig);
       const sizes = this.config.photoSizes;
+
+      if (this.config.api === undefined) {
+         return;
+      }
 
       this.config.api.setPhotoSizes = [
          ...sizes.big,
@@ -70,5 +54,5 @@ export const provider = new FlickrProvider({
       normal: [Flickr.SizeCode.Large1024],
       big: [Flickr.SizeCode.Large1024]
    },
-   api: null
+   api: undefined
 });

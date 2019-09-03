@@ -8,8 +8,8 @@ import { PhotoSize } from '@trailimage/models';
 export function loadPhotoSize(
    res: Flickr.PhotoSummary,
    ...sizePref: Flickr.SizeCode[]
-): PhotoSize {
-   let sizeCode: string = null;
+): PhotoSize | undefined {
+   let sizeCode: string | null = null;
    let exists = false;
 
    // iterate through size preferences to find first that isn't empty
@@ -22,13 +22,13 @@ export function loadPhotoSize(
    }
 
    if (exists) {
-      const suffix = sizeCode.replace('url', '');
+      const suffix = sizeCode!.replace('url', '');
 
       return new PhotoSize(
          parseInt(res['width' + suffix]),
          parseInt(res['height' + suffix]),
-         res[sizeCode]
+         res[sizeCode!]
       );
    }
-   return null;
+   return undefined;
 }

@@ -10,15 +10,15 @@ import {
    timeStampToDate
 } from './post';
 
-let res: Flickr.Collection[];
+let res: Flickr.Collection[] | null;
 
 beforeAll(async () => {
    res = await flickr.client.getCollections();
-   expect(res).toBeDefined();
+   expect(res).not.toBeNull();
 });
 
 test('finds post containing photo', async () => {
-   const postID: string = await postIdWithPhotoId('photo-id');
+   const postID = await postIdWithPhotoId('photo-id');
    expect(postID).toBe('72157632729508554');
 });
 
@@ -28,7 +28,7 @@ test('creates date from timestamp', () => {
 });
 
 test('loads post from Flickr data', () => {
-   const post = loadPost(res[0].collection[0].set[0]);
+   const post = loadPost(res![0].collection[0].set[0]);
    expect(post).toBeDefined();
    expect(post.id).toBe('72157666725213214');
    expect(post.title).toBe('Stanley Lake Snow Hike');
@@ -37,7 +37,7 @@ test('loads post from Flickr data', () => {
 });
 
 test('loads post info from Flickr data', async () => {
-   const post = loadPost(res[0].collection[0].set[0]);
+   const post = loadPost(res![0].collection[0].set[0]);
 
    await loadInfo(post);
 
@@ -46,12 +46,12 @@ test('loads post info from Flickr data', async () => {
 });
 
 test('loads photo info from Flickr data', async () => {
-   const post = loadPost(res[0].collection[0].set[0]);
+   const post = loadPost(res![0].collection[0].set[0]);
 
    await loadPhotos(post);
 
    expect(post.infoLoaded).toBe(false);
    expect(post.photosLoaded).toBe(true);
-   expect(post.photos.length).toBe(13);
-   expect(post.photos[0].title).toBe('Slow roasted');
+   expect(post.photos!.length).toBe(13);
+   expect(post.photos![0].title).toBe('Slow roasted');
 });

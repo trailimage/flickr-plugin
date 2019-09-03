@@ -1,5 +1,4 @@
 import { Flickr } from '@toba/flickr';
-import { log } from '@toba/logger';
 import { is } from '@toba/tools';
 import { PhotoBlog, Post, blog } from '@trailimage/models';
 import { loadCategory } from './category';
@@ -17,8 +16,8 @@ import { FeatureSet } from './index';
  * details to load
  */
 export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
-   let collections: Flickr.Collection[] = [];
-   let tags: Flickr.Tag[] = [];
+   let collections: Flickr.Collection[] | null = [];
+   let tags: Flickr.Tag[] | null = [];
 
    try {
       [collections, tags] = await Promise.all([
@@ -26,25 +25,28 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
          flickr.client.getAllPhotoTags()
       ]);
    } catch (err) {
-      log.error(err);
+      console.error(err);
       blog.loaded = false;
       return blog;
    }
 
    blog.beginLoad();
    // parse collections and photo tags
-   blog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : null;
-   collections.forEach(c => loadCategory(c, true));
+   blog.tags = is.value<Flickr.Tag[]>(tags) ? parsePhotoTags(tags) : new Map();
+
+   if (collections !== null) {
+      collections.forEach(c => loadCategory(c, true));
+   }
 
    // posts are sorted newest first so add featured, non-chronological sets at
    // the end
-   const features: FeatureSet[] = provider.config.featureSets;
+   const features: FeatureSet[] | undefined = provider.config.featureSets;
 
    if (is.array<FeatureSet>(features)) {
       // sets to be featured at the collection root can be manually defined in
       // configuration
       for (const f of features) {
-         let p: Post = blog.postWithID(f.id);
+         let p: Post | undefined = blog.postWithID(f.id);
 
          if (p === undefined) {
             p = loadPost(f, false);
@@ -56,16 +58,14 @@ export async function loadPhotoBlog(async = true): Promise<PhotoBlog> {
 
    blog.finishLoad();
 
-   log.info(
-      `Loaded ${
-         blog.posts.length
-      } photo posts from Flickr: beginning detail retrieval`
+   console.info(
+      `Loaded ${blog.posts.length} photo posts from Flickr: beginning detail retrieval`
    );
 
    // retrieve additional post info without waiting for it to finish
    const postInfo = Promise.all(blog.posts.map(p => p.getInfo())).then(() => {
       blog.postInfoLoaded = true;
-      log.info('Finished loading post details');
+      console.info('Finished loading post details');
    });
 
    if (!async) {

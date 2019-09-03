@@ -31,7 +31,9 @@ export function parseDate(text: string): Date {
  * All photos with given tags.
  */
 export const photosWithTags = (...tags: string[]) =>
-   flickr.client.photoSearch(tags).then(photos => photos.map(loadPhoto));
+   flickr.client
+      .photoSearch(tags)
+      .then(photos => (photos !== null ? photos.map(loadPhoto) : []));
 
 /**
  * Create photo instance from Flickr photo summary.
@@ -41,22 +43,22 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
 
    photo.sourceUrl = `flickr.com/photos/${summary.pathalias}/${summary.id}`;
    photo.title = summary.title;
-   photo.description = is.value(summary.description)
+   photo.description = is.value<string>(summary.description)
       ? summary.description._content
-      : null;
+      : undefined;
    // tag slugs are later updated to proper names
    photo.tags = is.empty(summary.tags)
       ? new Set<string>()
       : new Set<string>(summary.tags.split(' '));
-   photo.dateTaken = is.value(summary.datetaken)
+   photo.dateTaken = is.value<string>(summary.datetaken)
       ? parseDate(summary.datetaken)
-      : null;
-   photo.latitude = is.value(summary.latitude)
+      : undefined;
+   photo.latitude = is.value<string>(summary.latitude)
       ? parseFloat(summary.latitude)
-      : null;
-   photo.longitude = is.value(summary.longitude)
+      : undefined;
+   photo.longitude = is.value<string>(summary.longitude)
       ? parseFloat(summary.longitude)
-      : null;
+      : undefined;
    photo.primary = summary.isprimary == 1;
 
    // outlier status is calculated later
@@ -64,12 +66,12 @@ export function loadPhoto(summary: Flickr.PhotoSummary, index: number): Photo {
 
    const sizes = provider.config.photoSizes;
 
-   photo.size = {
-      thumb: loadPhotoSize(summary, ...sizes.thumb),
-      preview: loadPhotoSize(summary, ...sizes.preview),
-      normal: loadPhotoSize(summary, ...sizes.normal),
-      big: loadPhotoSize(summary, ...sizes.big)
-   };
+   ['thumb', 'preview', 'normal', 'big'].forEach(code => {
+      const s = loadPhotoSize(summary, ...sizes[code]);
+      if (s !== undefined) {
+         photo.size[code] = s;
+      }
+   });
 
    return photo;
 }

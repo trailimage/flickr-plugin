@@ -4,11 +4,12 @@ import { Flickr } from '@toba/flickr';
 import { Photo } from '@trailimage/models';
 import { flickr } from './client';
 import { loadPhoto, parseDate, photosWithTags } from './photo';
-let res: Flickr.SetPhotos;
+
+let res: Flickr.SetPhotos | null;
 
 beforeAll(async () => {
    res = await flickr.client.getSetPhotos('id');
-   expect(res).toBeDefined();
+   expect(res).not.toBeNull();
 });
 
 test('finds photos with tags', async () => {
@@ -30,7 +31,7 @@ test.skip('adjusts Flickr date to local timezone', () => {
 });
 
 test('loads photo from Flickr data', () => {
-   const photo = loadPhoto(res.photo[0], 0);
+   const photo = loadPhoto(res!.photo[0], 0);
    expect(photo).toBeDefined();
    expect(photo.id).toBe('8459503474');
    expect(photo.title).toBe('Slow roasted');

@@ -18,15 +18,15 @@ test('has root categories', () => {
 test('returns category for key', () => {
    const what = blog.categoryWithKey('what');
    expect(what).toBeDefined();
-   expect(what.title).toBe('What');
-   expect(what.isChild).toBe(false);
-   expect(what.isParent).toBe(true);
+   expect(what!.title).toBe('What');
+   expect(what!.isChild).toBe(false);
+   expect(what!.isParent).toBe(true);
 
    const bicycle = blog.categoryWithKey('what/bicycle');
    expect(bicycle).toBeDefined();
-   expect(bicycle.title).toBe('Bicycle');
-   expect(bicycle.isChild).toBe(true);
-   expect(bicycle.isParent).toBe(false);
+   expect(bicycle!.title).toBe('Bicycle');
+   expect(bicycle!.isChild).toBe(true);
+   expect(bicycle!.isParent).toBe(false);
 });
 
 test('returns keys for category', () => {
@@ -61,14 +61,14 @@ test('finds posts by ID or key', () => {
    const post1 = blog.postWithID('72157666685116730');
 
    expect(post1).toBeDefined();
-   expect(post1.title).toBe('Spring Fish & Chips');
-   expect(post1.photoCount).toBe(32);
+   expect(post1!.title).toBe('Spring Fish & Chips');
+   expect(post1!.photoCount).toBe(32);
 
    const post2 = blog.postWithKey('owyhee-snow-and-sand/lowlands');
 
    expect(post2).toBeDefined();
-   expect(post2.title).toBe('Owyhee Snow and Sand');
-   expect(post2.subTitle).toBe('Lowlands');
+   expect(post2!.title).toBe('Owyhee Snow and Sand');
+   expect(post2!.subTitle).toBe('Lowlands');
    // expect(post2.description).toBe(
    //    'I have had my fill of the place but I think Brenna might find Kuna Cave a fun adventure so her and Hunter join me in the little car for the short drive to dusty spelunking while Jessica is busy with meetings.'
    // );
@@ -83,7 +83,7 @@ test('creates list of post keys', () => {
 test('removes posts', () => {
    let post = blog.postWithKey('owyhee-snow-and-sand/lowlands');
    expect(post).toBeDefined();
-   blog.remove(post.key);
+   blog.remove(post!.key!);
    post = blog.postWithKey('owyhee-snow-and-sand/lowlands');
    expect(post).not.toBeDefined();
 });

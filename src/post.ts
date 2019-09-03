@@ -1,7 +1,12 @@
 import { Flickr } from '@toba/flickr';
 import { is, parseNumber } from '@toba/tools';
-import { log } from '@toba/logger';
-import { Post, Photo, blog, identifyOutliers } from '@trailimage/models';
+import {
+   Post,
+   Photo,
+   blog,
+   identifyOutliers,
+   VideoInfo
+} from '@trailimage/models';
 import { flickr } from './client';
 import { FeatureSet } from './index';
 import { loadVideoInfo } from './video-info';
@@ -33,9 +38,11 @@ export const timeStampToIsoString = (timestamp: number | Date) =>
 /**
  * Get first post that includes the given photo.
  */
-export async function postIdWithPhotoId(photoID: string): Promise<string> {
+export async function postIdWithPhotoId(
+   photoID: string
+): Promise<string | null> {
    const photoSets = await flickr.client.getPhotoContext(photoID);
-   return is.value(photoSets) ? photoSets[0].id : null;
+   return is.array<Flickr.MemberSet>(photoSets) ? photoSets[0].id : null;
 }
 
 /**
@@ -64,10 +71,11 @@ export const loadPhotos = (p: Post): Promise<Photo[]> =>
 /**
  * Update post with Flickr set information.
  */
-function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
-   const thumb = `http://farm${setInfo.farm}.staticflickr.com/${
-      setInfo.server
-   }/${setInfo.primary}_${setInfo.secret}`;
+function updateInfo(p: Post, setInfo: Flickr.SetInfo | null): Post {
+   if (setInfo === null) {
+      return p;
+   }
+   const thumb = `http://farm${setInfo.farm}.staticflickr.com/${setInfo.server}/${setInfo.primary}_${setInfo.secret}`;
 
    // removes video information from setInfo.description
    p.video = loadVideoInfo(setInfo);
@@ -95,14 +103,17 @@ function updateInfo(p: Post, setInfo: Flickr.SetInfo): Post {
    return p;
 }
 
-function updatePhotos(p: Post, setPhotos: Flickr.SetPhotos): Photo[] {
+function updatePhotos(p: Post, setPhotos: Flickr.SetPhotos | null): Photo[] {
+   if (setPhotos === null) {
+      return p.photos === undefined ? [] : p.photos;
+   }
    p.photos = setPhotos.photo.map((img, index) => loadPhoto(img, index));
 
    if (p.photos.length > 0) {
       p.coverPhoto = p.photos.find(img => img.primary);
 
       if (!is.value(p.coverPhoto)) {
-         log.error(`No cover photo defined for ${p.title}`);
+         console.error(`No cover photo defined for ${p.title}`);
          p.coverPhoto = p.photos[0];
       }
 
@@ -112,17 +123,17 @@ function updatePhotos(p: Post, setPhotos: Flickr.SetPhotos): Photo[] {
       if (p.chronological) {
          identifyOutliers(p.photos);
          const firstDatedPhoto = p.photos.find(i => !i.outlierDate);
-         if (is.value(firstDatedPhoto)) {
+         if (is.value<Photo>(firstDatedPhoto)) {
             p.happenedOn = firstDatedPhoto.dateTaken;
          }
       }
 
       if (!is.empty(p.description)) {
-         p.longDescription = `${p.description} (Includes ${
-            p.photos.length
-         } photos`;
+         p.longDescription = `${p.description} (Includes ${p.photos.length} photos`;
          p.longDescription +=
-            is.value(p.video) && !p.video.empty ? ' and one video)' : ')';
+            is.value<VideoInfo>(p.video) && !p.video.empty
+               ? ' and one video)'
+               : ')';
       }
 
       p.updatePhotoLocations();

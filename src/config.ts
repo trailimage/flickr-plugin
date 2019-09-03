@@ -19,7 +19,7 @@ export interface ProviderConfig {
       big: Flickr.SizeCode[];
    };
    /** Flickr API configuration. */
-   api: FlickrConfig;
+   api?: FlickrConfig;
    /** Optional set IDs to feature. */
    featureSets?: FeatureSet[];
 }

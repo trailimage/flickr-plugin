@@ -13,16 +13,26 @@ export function loadCategory(
    collection: Flickr.Collection,
    root = false
 ): Category {
-   const category = new Category(slug(collection.title), collection.title);
+   if (collection.title === undefined) {
+      throw new ReferenceError('Flickr collection is missing a title');
+   }
+   const key = slug(collection.title);
+
+   if (key === null) {
+      throw new Error(
+         `Unable to create slug from collection ${collection.title}`
+      );
+   }
+   const category = new Category(key, collection.title);
    let exclude = flickr.config.excludeSets;
-   let p: Post = null;
+   let p: Post | undefined;
 
    if (exclude === undefined) {
       exclude = [];
    }
    if (root) {
       // add category to blog's root set
-      blog.categories.set(slug(category.title), category);
+      blog.categories.set(slug(category.title)!, category);
    }
 
    if (is.array(collection.set) && collection.set.length > 0) {

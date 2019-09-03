@@ -22,6 +22,9 @@ provider.configure({
       timeZoneOffset: -1,
       setPhotoSizes: [Flickr.SizeCode.Large1024],
       useCache: false,
+      searchPhotoSizes: [],
+      maxCacheSize: 10,
+      retryDelay: 10,
       maxRetries: 1,
       auth: {
          apiKey: 'FLICKR_API_KEY',
@@ -29,8 +32,7 @@ provider.configure({
          callback: 'http://www.trailimage.com/auth/flickr',
          token: {
             access: 'FLICKR_ACCESS_TOKEN',
-            secret: 'FLICKR_TOKEN_SECRET',
-            request: null
+            secret: 'FLICKR_TOKEN_SECRET'
          }
       }
    }
