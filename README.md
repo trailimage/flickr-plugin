@@ -5,8 +5,12 @@
 [![DevDependencies](https://img.shields.io/david/dev/trailimage/flickr-provider.svg)](https://david-dm.org/trailimage/flickr-provider#info=devDependencies&view=list)
 [![codecov](https://codecov.io/gh/trailimage/flickr-provider/branch/master/graph/badge.svg)](https://codecov.io/gh/trailimage/flickr-provider)
 
+# Overview
+
+Use [Flickr Client](https://github.com/toba/flickr) to populate [Trail Image models](https://github.com/trailimage/models).
+
 # Usage
 
 ```
-yarn add @trailimage/flickr-provider --dev
+npm install @trailimage/flickr-provider
 ```
