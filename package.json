@@ -29,8 +29,8 @@
    },
    "devDependencies": {
       "@toba/develop": "^6.7.3",
-      "@toba/test": "^4.1.13",
-      "@types/node-fetch": "^2.5.1",
+      "@toba/test": "^4.1.16",
+      "@types/node-fetch": "^2.5.2",
       "typescript": "^3.6.3"
    },
    "repository": {
@@ -39,10 +39,6 @@
    },
    "bugs": {
       "url": "https://github.com/trailimage/flickr-provider/issues"
-   },
-   "prettier": {
-      "singleQuote": true,
-      "tabWidth": 3
    },
    "dependencies": {
       "@toba/flickr": "^3.0.0",
