@@ -27,6 +27,10 @@ class FlickrProvider extends PostProvider<ProviderConfig> {
       return flickr.client.getAccessToken(requestToken, verifier);
    }
 
+   clearCache() {
+      flickr.client.clearCache();
+   }
+
    /**
     * Merge configuration as normal then copy sizes to API configuration.
     */
