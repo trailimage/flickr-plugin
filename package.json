@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "3.2.0",
+   "version": "3.2.1",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
@@ -28,10 +28,10 @@
       "test": "jest --coverage"
    },
    "devDependencies": {
-      "@toba/develop": "^6.7.3",
-      "@toba/test": "^4.1.16",
-      "@types/node-fetch": "^2.5.2",
-      "typescript": "^3.6.3"
+      "@toba/develop": "^6.8.0",
+      "@toba/test": "^4.2.0",
+      "@types/node-fetch": "^2.5.4",
+      "typescript": "^3.7.5"
    },
    "repository": {
       "type": "git",
@@ -42,8 +42,8 @@
    },
    "dependencies": {
       "@toba/flickr": "^3.1.0",
-      "@toba/map": "^2.1.1",
-      "@toba/tools": "^6.7.7",
-      "@trailimage/models": "^3.1.0"
+      "@toba/map": "^2.6.2",
+      "@toba/tools": "^6.13.4",
+      "@trailimage/models": "^3.2.2"
    }
 }
