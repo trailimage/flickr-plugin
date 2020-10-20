@@ -1,6 +1,6 @@
 {
    "name": "@trailimage/flickr-provider",
-   "version": "3.2.2",
+   "version": "3.2.3",
    "description": "Trail Image Flickr provider",
    "private": false,
    "engines": {
@@ -22,8 +22,8 @@
       "cjs"
    ],
    "scripts": {
-      "build:esm": "./node_modules/.bin/tsc --project ./node_modules/@toba/develop/tsconfig.esm.json",
-      "build:cjs": "./node_modules/.bin/tsc --project ./node_modules/@toba/develop/tsconfig.cjs-min.json",
+      "build:esm": "tsc --project ./node_modules/@toba/develop/tsconfig.esm.json",
+      "build:cjs": "tsc --project ./node_modules/@toba/develop/tsconfig.cjs-min.json",
       "prepublishOnly": "npm run build:esm & npm run build:cjs",
       "test": "jest --coverage"
    },
